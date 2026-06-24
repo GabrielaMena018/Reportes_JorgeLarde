@@ -47,16 +47,6 @@ const generarPDFReporte = async (reporte) => {
       };
 
       // ── Helper pie de página ──────────────────────────────────────────────────
-      const dibujarPie = (numero_ticket) => {
-        const pageHeight = doc.page.height;
-        doc.rect(0, pageHeight - 40, 595, 40).fill(AZUL_OSCURO);
-        doc.fillColor("#94a3b8").font("Helvetica").fontSize(9)
-          .text(
-            `Sistema de Reportes de Incidencias  -  Ticket ${numero_ticket}  -  ${new Date().getFullYear()}`,
-            50, pageHeight - 25,
-            { align: "center", width: 495 }
-          );
-      };
 
       // ── ENCABEZADO ────────────────────────────────────────────────────────────
       doc.rect(0, 0, 595, 110).fill(AZUL_OSCURO);
@@ -159,8 +149,6 @@ const generarPDFReporte = async (reporte) => {
         y += notasHeight + 20;
       }
 
-      // Pie de página primera hoja
-      dibujarPie(reporte.numero_ticket);
 
       // ── EVIDENCIA FOTOGRAFICA ─────────────────────────────────────────────────
       if (reporte.imagenes && reporte.imagenes.length > 0) {
@@ -237,8 +225,6 @@ const generarPDFReporte = async (reporte) => {
           y += altoImg + 36;
         }
 
-        // Pie de página hoja de evidencia
-        dibujarPie(reporte.numero_ticket);
       }
 
       doc.end();
