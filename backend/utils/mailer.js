@@ -1,21 +1,8 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 
-const crearTransportador = () => {
-  return nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_APP_PASSWORD,
-    },
-  });
-};
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-/**
- * Envía el PDF del reporte al administrador
- */
 const enviarEmailAdmin = async (reporte, pdfBuffer) => {
-  const transporter = crearTransportador();
-
   const colorPrioridad = {
     Baja: "#16a34a",
     Media: "#d97706",
@@ -26,28 +13,21 @@ const enviarEmailAdmin = async (reporte, pdfBuffer) => {
   const html = `
     <!DOCTYPE html>
     <html lang="es">
-    <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"></head>
+    <head><meta charset="UTF-8"></head>
     <body style="margin:0;padding:0;background:#f1f5f9;font-family:Arial,sans-serif;">
       <div style="max-width:600px;margin:30px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);">
-        
-        <!-- Header -->
         <div style="background:#1a2a4a;padding:30px;text-align:center;">
-          <h1 style="color:#fff;margin:0;font-size:22px;letter-spacing:1px;">⚠️ NUEVO REPORTE DE ERROR</h1>
-          <p style="color:#94a3b8;margin:8px 0 0;font-size:13px;">Sistema de Incidencias Tecnológicas</p>
+          <h1 style="color:#fff;margin:0;font-size:22px;">NUEVO REPORTE DE ERROR</h1>
+          <p style="color:#94a3b8;margin:8px 0 0;font-size:13px;">Sistema de Incidencias Tecnologicas</p>
           <div style="background:#2563eb;display:inline-block;padding:6px 20px;border-radius:20px;margin-top:12px;">
             <span style="color:#fff;font-weight:bold;font-size:14px;">${reporte.numero_ticket}</span>
           </div>
         </div>
-
-        <!-- Badge prioridad -->
         <div style="background:${colorPrioridad[reporte.prioridad]};padding:10px;text-align:center;">
           <span style="color:#fff;font-weight:bold;font-size:13px;">PRIORIDAD: ${reporte.prioridad.toUpperCase()}</span>
         </div>
-
-        <!-- Contenido -->
         <div style="padding:30px;">
-          
-          <h3 style="color:#1a2a4a;border-bottom:2px solid #e2e8f0;padding-bottom:8px;">👤 Docente</h3>
+          <h3 style="color:#1a2a4a;border-bottom:2px solid #e2e8f0;padding-bottom:8px;">Docente</h3>
           <table style="width:100%;border-collapse:collapse;">
             <tr>
               <td style="padding:6px 0;color:#64748b;font-size:13px;width:40%;">Nombre:</td>
@@ -57,77 +37,50 @@ const enviarEmailAdmin = async (reporte, pdfBuffer) => {
               <td style="padding:6px 0;color:#64748b;font-size:13px;">Correo:</td>
               <td style="padding:6px 0;color:#2563eb;font-size:13px;">${reporte.correo_docente}</td>
             </tr>
-            <tr>
-              <td style="padding:6px 0;color:#64748b;font-size:13px;">Institución:</td>
-              <td style="padding:6px 0;color:#1a2a4a;font-size:13px;">${reporte.institucion}</td>
-            </tr>
-            ${reporte.telefono ? `
-            <tr>
-              <td style="padding:6px 0;color:#64748b;font-size:13px;">Teléfono:</td>
-              <td style="padding:6px 0;color:#1a2a4a;font-size:13px;">${reporte.telefono}</td>
-            </tr>` : ""}
           </table>
-
-          <h3 style="color:#1a2a4a;border-bottom:2px solid #e2e8f0;padding-bottom:8px;margin-top:20px;">🔧 Error Reportado</h3>
+          <h3 style="color:#1a2a4a;border-bottom:2px solid #e2e8f0;padding-bottom:8px;margin-top:20px;">Error Reportado</h3>
           <table style="width:100%;border-collapse:collapse;">
             <tr>
               <td style="padding:6px 0;color:#64748b;font-size:13px;width:40%;">Tipo:</td>
               <td style="padding:6px 0;color:#1a2a4a;font-weight:bold;font-size:13px;">${reporte.tipo_error}</td>
             </tr>
             <tr>
-              <td style="padding:6px 0;color:#64748b;font-size:13px;">Salón:</td>
+              <td style="padding:6px 0;color:#64748b;font-size:13px;">Salon:</td>
               <td style="padding:6px 0;color:#1a2a4a;font-size:13px;">${reporte.salon || "No especificado"}</td>
             </tr>
             <tr>
-              <td style="padding:6px 0;color:#64748b;font-size:13px;">Fecha del error:</td>
+              <td style="padding:6px 0;color:#64748b;font-size:13px;">Fecha:</td>
               <td style="padding:6px 0;color:#1a2a4a;font-size:13px;">${new Date(reporte.fecha_ocurrencia).toLocaleDateString("es-SV", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</td>
             </tr>
           </table>
-
           <div style="background:#f8fafc;border-left:4px solid #2563eb;padding:15px;margin:20px 0;border-radius:0 8px 8px 0;">
-            <p style="color:#64748b;font-size:12px;margin:0 0 6px;text-transform:uppercase;font-weight:bold;">Descripción del problema</p>
+            <p style="color:#64748b;font-size:12px;margin:0 0 6px;text-transform:uppercase;font-weight:bold;">Descripcion</p>
             <p style="color:#1a2a4a;font-size:14px;margin:0;line-height:1.6;">${reporte.descripcion}</p>
           </div>
-
-          ${reporte.imagen ? `
-          <div style="text-align:center;margin:20px 0;">
-            <p style="color:#64748b;font-size:12px;text-transform:uppercase;font-weight:bold;">📎 Imagen adjunta disponible en el PDF</p>
-            <a href="${reporte.imagen.url}" style="color:#2563eb;font-size:12px;">Ver imagen en Cloudinary →</a>
-          </div>` : ""}
-
         </div>
-
-        <!-- CTA -->
         <div style="background:#f8fafc;padding:20px;text-align:center;border-top:1px solid #e2e8f0;">
-          <p style="color:#64748b;font-size:12px;margin:0 0 12px;">El PDF completo con todos los detalles y la imagen está adjunto a este correo.</p>
-          <p style="color:#94a3b8;font-size:11px;margin:0;">Reporte creado el ${new Date().toLocaleDateString("es-SV", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" })}</p>
+          <p style="color:#64748b;font-size:12px;margin:0;">El PDF completo esta adjunto a este correo.</p>
         </div>
       </div>
     </body>
     </html>
   `;
 
-  await transporter.sendMail({
-    from: `"Sistema de Reportes" <${process.env.GMAIL_USER}>`,
+  await resend.emails.send({
+    from: "Sistema de Reportes <onboarding@resend.dev>",
     to: process.env.ADMIN_EMAIL,
-    subject: `[${reporte.prioridad}] Nuevo reporte: ${reporte.tipo_error} — ${reporte.numero_ticket}`,
+    subject: `[${reporte.prioridad}] Nuevo reporte: ${reporte.tipo_error} - ${reporte.numero_ticket}`,
     html,
     attachments: [
       {
         filename: `reporte-${reporte.numero_ticket}.pdf`,
         content: pdfBuffer,
-        contentType: "application/pdf",
       },
     ],
   });
 };
 
-/**
- * Envía confirmación al docente
- */
 const enviarConfirmacionDocente = async (reporte) => {
-  const transporter = crearTransportador();
-
   const html = `
     <!DOCTYPE html>
     <html lang="es">
@@ -135,32 +88,30 @@ const enviarConfirmacionDocente = async (reporte) => {
     <body style="margin:0;padding:0;background:#f1f5f9;font-family:Arial,sans-serif;">
       <div style="max-width:560px;margin:30px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);">
         <div style="background:#1a2a4a;padding:30px;text-align:center;">
-          <h1 style="color:#fff;margin:0;font-size:20px;">✅ Reporte Recibido</h1>
+          <h1 style="color:#fff;margin:0;font-size:20px;">Reporte Recibido</h1>
           <p style="color:#94a3b8;margin:8px 0 0;font-size:13px;">Tu reporte ha sido registrado exitosamente</p>
         </div>
         <div style="padding:30px;">
           <p style="color:#1a2a4a;font-size:15px;">Hola, <strong>${reporte.nombre_docente}</strong>,</p>
-          <p style="color:#475569;font-size:14px;line-height:1.6;">Tu reporte de error de conexión ha sido registrado correctamente. El equipo técnico lo revisará pronto.</p>
-          
+          <p style="color:#475569;font-size:14px;line-height:1.6;">Tu reporte de error de conexion ha sido registrado. El equipo tecnico lo revisara pronto.</p>
           <div style="background:#eff6ff;border-radius:8px;padding:20px;margin:20px 0;text-align:center;">
-            <p style="color:#2563eb;font-size:13px;margin:0 0 6px;">Número de ticket</p>
+            <p style="color:#2563eb;font-size:13px;margin:0 0 6px;">Numero de ticket</p>
             <p style="color:#1a2a4a;font-size:24px;font-weight:bold;margin:0;letter-spacing:2px;">${reporte.numero_ticket}</p>
           </div>
-
-          <p style="color:#64748b;font-size:13px;line-height:1.6;">Guarda este número de ticket para dar seguimiento a tu reporte. En caso de no recibir respuesta en 24 horas, comunícate con el equipo técnico.</p>
+          <p style="color:#64748b;font-size:13px;">Guarda este numero para dar seguimiento a tu reporte.</p>
         </div>
         <div style="background:#f8fafc;padding:15px;text-align:center;border-top:1px solid #e2e8f0;">
-          <p style="color:#94a3b8;font-size:11px;margin:0;">Sistema de Incidencias Tecnológicas · ${new Date().getFullYear()}</p>
+          <p style="color:#94a3b8;font-size:11px;margin:0;">Sistema de Incidencias Tecnologicas - ${new Date().getFullYear()}</p>
         </div>
       </div>
     </body>
     </html>
   `;
 
-  await transporter.sendMail({
-    from: `"Sistema de Reportes" <${process.env.GMAIL_USER}>`,
+  await resend.emails.send({
+    from: "Sistema de Reportes <onboarding@resend.dev>",
     to: reporte.correo_docente,
-    subject: `Reporte recibido — Ticket ${reporte.numero_ticket}`,
+    subject: `Reporte recibido - Ticket ${reporte.numero_ticket}`,
     html,
   });
 };

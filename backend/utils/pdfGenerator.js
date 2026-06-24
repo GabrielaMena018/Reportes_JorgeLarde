@@ -2,9 +2,6 @@ const PDFDocument = require("pdfkit");
 const https = require("https");
 const http = require("http");
 
-/**
- * Descarga una imagen desde una URL y devuelve su Buffer
- */
 const descargarImagen = (url) => {
   return new Promise((resolve, reject) => {
     const protocol = url.startsWith("https") ? https : http;
@@ -17,11 +14,6 @@ const descargarImagen = (url) => {
   });
 };
 
-/**
- * Genera un PDF con los datos del reporte
- * @param {object} reporte - Documento de MongoDB
- * @returns {Promise<Buffer>} - Buffer del PDF generado
- */
 const generarPDFReporte = async (reporte) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -32,50 +24,45 @@ const generarPDFReporte = async (reporte) => {
       doc.on("end", () => resolve(Buffer.concat(buffers)));
       doc.on("error", reject);
 
-      // ── Colores institucionales ──────────────────────────────────────────────
       const AZUL_OSCURO = "#1a2a4a";
-      const AZUL_MEDIO = "#2563eb";
+      const AZUL_MEDIO  = "#2563eb";
       const ROJO_CRITICO = "#dc2626";
-      const VERDE_OK = "#16a34a";
-      const GRIS_CLARO = "#f1f5f9";
-      const GRIS_TEXTO = "#64748b";
+      const VERDE_OK    = "#16a34a";
+      const GRIS_CLARO  = "#f1f5f9";
+      const GRIS_TEXTO  = "#64748b";
 
       const colorPrioridad = {
         Baja: VERDE_OK,
         Media: "#d97706",
         Alta: "#ea580c",
-        Crítica: ROJO_CRITICO,
+        "Critica": ROJO_CRITICO,
       };
 
       const colorEstado = {
         Pendiente: "#d97706",
-        "En revisión": AZUL_MEDIO,
+        "En revision": AZUL_MEDIO,
         Resuelto: VERDE_OK,
         Cerrado: GRIS_TEXTO,
       };
 
-      // ── ENCABEZADO ───────────────────────────────────────────────────────────
+      // ── ENCABEZADO ────────────────────────────────────────────────────────────
       doc.rect(0, 0, 595, 100).fill(AZUL_OSCURO);
 
       doc.fillColor("white")
         .font("Helvetica-Bold")
         .fontSize(22)
-        .text("REPORTE DE ERROR DE CONEXIÓN", 50, 28, { align: "center" });
+        .text("REPORTE DE ERROR DE CONEXION", 50, 28, { align: "center" });
 
       doc.fontSize(11)
         .font("Helvetica")
         .fillColor("#94a3b8")
-        .text("Sistema de Gestión de Incidencias Tecnológicas", 50, 58, { align: "center" });
+        .text("Sistema de Gestion de Incidencias Tecnologicas", 50, 58, { align: "center" });
 
-      // Número de ticket
-      doc.roundedRect(195, 72, 200, 22, 4)
-        .fill(AZUL_MEDIO);
-      doc.fillColor("white")
-        .font("Helvetica-Bold")
-        .fontSize(11)
+      doc.roundedRect(195, 72, 200, 22, 4).fill(AZUL_MEDIO);
+      doc.fillColor("white").font("Helvetica-Bold").fontSize(11)
         .text(`Ticket: ${reporte.numero_ticket}`, 195, 77, { width: 200, align: "center" });
 
-      // ── BADGES DE ESTADO Y PRIORIDAD ─────────────────────────────────────────
+      // ── BADGES ───────────────────────────────────────────────────────────────
       const yBadge = 115;
 
       doc.roundedRect(50, yBadge, 110, 22, 4)
@@ -88,14 +75,13 @@ const generarPDFReporte = async (reporte) => {
       doc.fillColor("white").font("Helvetica-Bold").fontSize(10)
         .text(`Prioridad: ${reporte.prioridad}`, 175, yBadge + 6, { width: 120, align: "center" });
 
-      // Fecha de creación
       doc.fillColor(GRIS_TEXTO).font("Helvetica").fontSize(9)
         .text(
-          `Generado: ${new Date().toLocaleDateString("es-SV", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" })}`,
+          `Generado: ${new Date().toLocaleDateString("es-SV", { year: "numeric", month: "long", day: "numeric" })}`,
           310, yBadge + 6
         );
 
-      // ── SECCIÓN: DATOS DEL DOCENTE ────────────────────────────────────────────
+      // ── HELPERS ───────────────────────────────────────────────────────────────
       let y = 155;
 
       const dibujarSeccion = (titulo, yPos) => {
@@ -114,20 +100,18 @@ const generarPDFReporte = async (reporte) => {
         return yPos + 26;
       };
 
-      y = dibujarSeccion("📋  INFORMACIÓN DEL DOCENTE", y);
+      // ── SECCION: DATOS DEL DOCENTE ────────────────────────────────────────────
+      y = dibujarSeccion("INFORMACION DEL DOCENTE", y);
 
-      dibujarCampo("Nombre completo", reporte.nombre_docente, 50, y);
-      dibujarCampo("Correo electrónico", reporte.correo_docente, 280, y);
-      y += 26;
-      dibujarCampo("Institución", reporte.institucion, 50, y, 340);
-      dibujarCampo("Teléfono", reporte.telefono || "No proporcionado", 400, y, 145);
+      dibujarCampo("Nombre completo", reporte.nombre_docente, 50, y, 220);
+      dibujarCampo("Correo electronico", reporte.correo_docente, 280, y, 265);
       y += 36;
 
-      // ── SECCIÓN: DETALLES DEL ERROR ───────────────────────────────────────────
-      y = dibujarSeccion("⚠️  DETALLES DEL ERROR", y);
+      // ── SECCION: DETALLES DEL ERROR ───────────────────────────────────────────
+      y = dibujarSeccion("DETALLES DEL ERROR", y);
 
-      dibujarCampo("Tipo de error", reporte.tipo_error, 50, y);
-      dibujarCampo("Salón / Ubicación", reporte.salon || "No especificado", 280, y);
+      dibujarCampo("Tipo de error", reporte.tipo_error, 50, y, 220);
+      dibujarCampo("Salon / Ubicacion", reporte.salon || "No especificado", 280, y, 265);
       y += 26;
       dibujarCampo(
         "Fecha de ocurrencia",
@@ -138,10 +122,10 @@ const generarPDFReporte = async (reporte) => {
       );
       y += 36;
 
-      // Descripción
+      // Descripcion
       doc.rect(50, y, 495, 14).fill(AZUL_OSCURO);
       doc.fillColor("white").font("Helvetica-Bold").fontSize(10)
-        .text("DESCRIPCIÓN DEL PROBLEMA", 60, y + 3);
+        .text("DESCRIPCION DEL PROBLEMA", 60, y + 3);
       y += 18;
 
       const descripcionHeight = Math.max(60, Math.ceil(reporte.descripcion.length / 80) * 14 + 20);
@@ -152,7 +136,7 @@ const generarPDFReporte = async (reporte) => {
 
       // ── NOTAS DEL ADMINISTRADOR ───────────────────────────────────────────────
       if (reporte.notas_admin) {
-        y = dibujarSeccion("💬  NOTAS DEL ADMINISTRADOR", y);
+        y = dibujarSeccion("NOTAS DEL ADMINISTRADOR", y);
         doc.rect(50, y, 495, 50).fill("#f0fdf4");
         doc.rect(50, y, 4, 50).fill(VERDE_OK);
         doc.fillColor(AZUL_OSCURO).font("Helvetica").fontSize(10)
@@ -162,13 +146,12 @@ const generarPDFReporte = async (reporte) => {
 
       // ── IMAGEN ADJUNTA ────────────────────────────────────────────────────────
       if (reporte.imagen && reporte.imagen.url) {
-        // Revisar si queda espacio suficiente
         if (y > 580) {
           doc.addPage();
           y = 50;
         }
 
-        y = dibujarSeccion("🖼️  EVIDENCIA FOTOGRÁFICA", y);
+        y = dibujarSeccion("EVIDENCIA FOTOGRAFICA", y);
 
         try {
           const imgBuffer = await descargarImagen(reporte.imagen.url);
@@ -191,12 +174,12 @@ const generarPDFReporte = async (reporte) => {
         }
       }
 
-      // ── PIE DE PÁGINA ─────────────────────────────────────────────────────────
+      // ── PIE DE PAGINA ─────────────────────────────────────────────────────────
       const pageHeight = doc.page.height;
       doc.rect(0, pageHeight - 45, 595, 45).fill(AZUL_OSCURO);
       doc.fillColor("#94a3b8").font("Helvetica").fontSize(8)
         .text(
-          `Sistema de Reportes de Incidencias  •  Ticket ${reporte.numero_ticket}  •  ${new Date().getFullYear()}`,
+          `Sistema de Reportes de Incidencias  -  Ticket ${reporte.numero_ticket}  -  ${new Date().getFullYear()}`,
           50, pageHeight - 28,
           { align: "center", width: 495 }
         );

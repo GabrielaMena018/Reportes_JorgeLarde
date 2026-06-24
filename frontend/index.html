@@ -830,8 +830,6 @@
               <option>Conexión lenta</option>
               <option>WiFi no conecta</option>
               <option>Error de plataforma</option>
-              <option>Equipo no enciende</option>
-              <option>Error de sistema</option>
               <option>Otro</option>
             </select>
           </div>
@@ -1183,9 +1181,22 @@
 
       if (!res.ok) throw new Error(data.error || "Error al enviar el reporte");
 
-      document.getElementById("ticket-number-display").textContent = data.ticket;
+     document.getElementById("ticket-number-display").textContent = data.ticket;
       document.getElementById("ticket-result").classList.add("show");
-      document.getElementById("form-main").style.display = "none";
+
+      // Ocultar todas las secciones del formulario
+      document.querySelectorAll(".form-section").forEach(s => s.style.display = "none");
+
+      // Limpiar todos los campos
+      document.getElementById("nombre_docente").value = "";
+      document.getElementById("correo_docente").value = "";
+      document.getElementById("tipo_error").value = "";
+      document.getElementById("descripcion").value = "";
+      document.getElementById("salon").value = "";
+      document.getElementById("fecha_ocurrencia").value = new Date().toISOString().split("T")[0];
+      document.getElementById("imagen").value = "";
+      document.getElementById("preview-img").style.display = "none";
+      document.getElementById("prioridad").value = "Media";
 
     } catch (err) {
       mostrarToast(err.message || "Error de conexión con el servidor.", "error");
@@ -1198,12 +1209,24 @@
 
   function nuevoReporte() {
     document.getElementById("ticket-result").classList.remove("show");
-    document.getElementById("form-main").style.display = "block";
-    ["nombre_docente","correo_docente","tipo_error","descripcion","salon"].forEach(id => {
-      document.getElementById(id).value = "";
-    });
-    document.getElementById("preview-img").style.display = "none";
+
+    // Mostrar todas las secciones
+    document.querySelectorAll(".form-section").forEach(s => s.style.display = "block");
+
+    // Limpiar campos
+    document.getElementById("nombre_docente").value = "";
+    document.getElementById("correo_docente").value = "";
+    document.getElementById("tipo_error").value = "";
+    document.getElementById("descripcion").value = "";
+    document.getElementById("salon").value = "";
     document.getElementById("fecha_ocurrencia").value = new Date().toISOString().split("T")[0];
+    document.getElementById("imagen").value = "";
+    document.getElementById("preview-img").style.display = "none";
+
+    // Resetear prioridad a Media
+    document.querySelectorAll(".prioridad-btn").forEach(b => b.style.opacity = "0.5");
+    const mediaBtn = document.querySelector('[data-valor="Media"]');
+    if (mediaBtn) seleccionarPrioridad(mediaBtn);
   }
 
   // ── Admin login ─────────────────────────────────────────────────────────────
