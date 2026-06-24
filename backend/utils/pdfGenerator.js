@@ -156,11 +156,10 @@ const generarPDFReporte = async (reporte) => {
       }
 
       // ── IMAGEN ADJUNTA ────────────────────────────────────────────────────────
-      if (reporte.imagen && reporte.imagen.url) {
-        if (y > 560) {
-          doc.addPage();
-          y = 50;
-        }
+    if (reporte.imagen && reporte.imagen.url) {
+        // Siempre poner la imagen en página nueva
+        doc.addPage();
+        y = 50;
 
         y = dibujarSeccion("EVIDENCIA FOTOGRAFICA", y);
 
