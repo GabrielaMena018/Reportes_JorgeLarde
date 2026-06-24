@@ -14,15 +14,6 @@ const reporteSchema = new mongoose.Schema(
       trim: true,
       lowercase: true,
     },
-    telefono: {
-      type: String,
-      trim: true,
-    },
-    institucion: {
-      type: String,
-      required: [true, "La institución es requerida"],
-      trim: true,
-    },
 
     // Datos del error
     tipo_error: {

@@ -28,7 +28,6 @@ router.get("/reportes", async (req, res) => {
       filtro.$or = [
         { nombre_docente: { $regex: buscar, $options: "i" } },
         { numero_ticket: { $regex: buscar, $options: "i" } },
-        { institucion: { $regex: buscar, $options: "i" } },
         { descripcion: { $regex: buscar, $options: "i" } },
       ];
     }

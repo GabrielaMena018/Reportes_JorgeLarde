@@ -28,8 +28,6 @@ router.post("/", upload.single("imagen"), async (req, res) => {
     const {
       nombre_docente,
       correo_docente,
-      telefono,
-      institucion,
       tipo_error,
       descripcion,
       salon,
@@ -38,7 +36,7 @@ router.post("/", upload.single("imagen"), async (req, res) => {
     } = req.body;
 
     // Validaciones básicas
-    if (!nombre_docente || !correo_docente || !institucion || !tipo_error || !descripcion || !fecha_ocurrencia) {
+    if (!nombre_docente || !correo_docente || !tipo_error || !descripcion || !fecha_ocurrencia) {
       return res.status(400).json({ error: "Todos los campos obligatorios deben completarse." });
     }
 
@@ -46,8 +44,6 @@ router.post("/", upload.single("imagen"), async (req, res) => {
     const datosReporte = {
       nombre_docente: nombre_docente.trim(),
       correo_docente: correo_docente.trim().toLowerCase(),
-      telefono: telefono?.trim(),
-      institucion: institucion.trim(),
       tipo_error,
       descripcion: descripcion.trim(),
       salon: salon?.trim(),

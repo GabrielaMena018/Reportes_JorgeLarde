@@ -811,14 +811,7 @@
             <label>Correo electrónico <span class="req">*</span></label>
             <input type="email" id="correo_docente" placeholder="correo@institucion.edu.sv" required />
           </div>
-          <div class="form-group">
-            <label>Institución / Centro escolar <span class="req">*</span></label>
-            <input type="text" id="institucion" placeholder="Ej: Complejo Educativo..." required />
-          </div>
-          <div class="form-group">
-            <label>Teléfono de contacto</label>
-            <input type="tel" id="telefono" placeholder="7777-1234" />
-          </div>
+         
         </div>
       </div>
 
@@ -1045,7 +1038,7 @@
 <script>
   // ── Configuración ───────────────────────────────────────────────────────────
   // ⚠️ CAMBIA ESTA URL por la URL de tu backend en Railway después de desplegar
-  const API_URL = "https://TU-BACKEND.up.railway.app";
+  const API_URL = "https://reportes-jorgelarde.onrender.com";
 
   let token = localStorage.getItem("admin_token") || null;
   let adminInfo = null;
@@ -1143,7 +1136,7 @@
   });
 
   async function enviarReporte() {
-    const campos = ["nombre_docente", "correo_docente", "institucion", "tipo_error", "descripcion", "fecha_ocurrencia"];
+    const campos = ["nombre_docente", "correo_docente", "tipo_error", "descripcion", "fecha_ocurrencia"];
     let valido = true;
 
     for (const id of campos) {
@@ -1172,8 +1165,6 @@
       const formData = new FormData();
       formData.append("nombre_docente", document.getElementById("nombre_docente").value.trim());
       formData.append("correo_docente", document.getElementById("correo_docente").value.trim());
-      formData.append("telefono", document.getElementById("telefono").value.trim());
-      formData.append("institucion", document.getElementById("institucion").value.trim());
       formData.append("tipo_error", document.getElementById("tipo_error").value);
       formData.append("descripcion", document.getElementById("descripcion").value.trim());
       formData.append("salon", document.getElementById("salon").value.trim());
@@ -1208,7 +1199,7 @@
   function nuevoReporte() {
     document.getElementById("ticket-result").classList.remove("show");
     document.getElementById("form-main").style.display = "block";
-    ["nombre_docente","correo_docente","telefono","institucion","tipo_error","descripcion","salon"].forEach(id => {
+    ["nombre_docente","correo_docente","tipo_error","descripcion","salon"].forEach(id => {
       document.getElementById(id).value = "";
     });
     document.getElementById("preview-img").style.display = "none";
@@ -1350,8 +1341,7 @@
 
     const filtrados = todosLosReportes.filter(r => {
       const matchBuscar = !buscar || r.nombre_docente.toLowerCase().includes(buscar) ||
-        r.numero_ticket.toLowerCase().includes(buscar) ||
-        r.institucion?.toLowerCase().includes(buscar);
+        r.numero_ticket.toLowerCase().includes(buscar) 
       const matchEstado = !estado || r.estado === estado;
       const matchPrioridad = !prioridad || r.prioridad === prioridad;
       return matchBuscar && matchEstado && matchPrioridad;
@@ -1376,7 +1366,6 @@
         <td><span class="ticket-code">${r.numero_ticket}</span></td>
         <td>
           <div style="font-weight:500">${r.nombre_docente}</div>
-          <div style="font-size:11px;color:#64748b">${r.institucion || ""}</div>
         </td>
         <td>${r.tipo_error}</td>
         <td>${badgeEstado(r.estado)}</td>
@@ -1409,10 +1398,6 @@
         <div class="detail-row">
           <div class="detail-field"><label>Docente</label><p>${r.nombre_docente}</p></div>
           <div class="detail-field"><label>Correo</label><p>${r.correo_docente}</p></div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-field"><label>Institución</label><p>${r.institucion}</p></div>
-          <div class="detail-field"><label>Teléfono</label><p>${r.telefono || "—"}</p></div>
         </div>
         <div class="detail-row">
           <div class="detail-field"><label>Tipo de error</label><p>${r.tipo_error}</p></div>
