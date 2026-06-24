@@ -177,52 +177,47 @@ const generarPDFReporte = async (reporte) => {
             y += 40;
           }
         } else {
-          // Dos imágenes — cada una ocupa media página lado a lado
-          const anchoImg  = 228;
-          const altoImg   = 300;
-          const xImg1     = 50;
-          const xImg2     = 292;
-          const gap       = 14;
+          // Dos imágenes — una arriba, otra abajo, cada una media página
+          const anchoImg = 460;
+          const altoImg  = 190;
 
-          // Fondo izquierdo
-          doc.rect(xImg1, y, anchoImg, altoImg + 24).fill(GRIS_CLARO);
-          // Fondo derecho
-          doc.rect(xImg2, y, anchoImg, altoImg + 24).fill(GRIS_CLARO);
-
-          // Label imagen 1
+          // ── IMAGEN 1 (arriba) ──
           doc.fillColor(GRIS_TEXTO).font("Helvetica").fontSize(8)
-            .text("IMAGEN 1", xImg1 + 10, y + 6);
-          // Label imagen 2
-          doc.fillColor(GRIS_TEXTO).font("Helvetica").fontSize(8)
-            .text("IMAGEN 2", xImg2 + 10, y + 6);
+            .text("IMAGEN 1", 50, y + 6);
+          doc.rect(50, y + 16, 495, altoImg).fill(GRIS_CLARO);
 
-          // Imagen 1
           try {
             const imgBuffer1 = await descargarImagen(reporte.imagenes[0].url);
-            doc.image(imgBuffer1, xImg1 + 6, y + 18, {
-              fit: [anchoImg - 12, altoImg],
+            doc.image(imgBuffer1, 67, y + 20, {
+              fit: [anchoImg, altoImg - 8],
               align: "center",
               valign: "center",
             });
           } catch {
             doc.fillColor(ROJO_CRITICO).font("Helvetica").fontSize(9)
-              .text("No se pudo cargar", xImg1 + 10, y + altoImg / 2);
+              .text("No se pudo cargar", 62, y + altoImg / 2);
           }
 
-          // Imagen 2
+          y += altoImg + 30;
+
+          // ── IMAGEN 2 (abajo) ──
+          doc.fillColor(GRIS_TEXTO).font("Helvetica").fontSize(8)
+            .text("IMAGEN 2", 50, y + 6);
+          doc.rect(50, y + 16, 495, altoImg).fill(GRIS_CLARO);
+
           try {
             const imgBuffer2 = await descargarImagen(reporte.imagenes[1].url);
-            doc.image(imgBuffer2, xImg2 + 6, y + 18, {
-              fit: [anchoImg - 12, altoImg],
+            doc.image(imgBuffer2, 67, y + 20, {
+              fit: [anchoImg, altoImg - 8],
               align: "center",
               valign: "center",
             });
           } catch {
             doc.fillColor(ROJO_CRITICO).font("Helvetica").fontSize(9)
-              .text("No se pudo cargar", xImg2 + 10, y + altoImg / 2);
+              .text("No se pudo cargar", 62, y + altoImg / 2);
           }
 
-          y += altoImg + 36;
+          y += altoImg + 20;
         }
 
       }
