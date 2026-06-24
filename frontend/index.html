@@ -265,14 +265,7 @@
     }
 
     .upload-zone input[type="file"] {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-      border: none;
-      padding: 0;
-      width: 100%;
-      height: 100%;
+      display: none;
     }
 
     .upload-icon {
@@ -1120,12 +1113,31 @@
             <div class="section-icon">📸</div>
             <div class="section-title">Evidencia fotográfica (opcional)</div>
           </div>
-          <div class="upload-zone" id="upload-zone">
-            <input type="file" id="imagen" accept="image/*" multiple onchange="previewImagen(this)" />
-            <div class="upload-icon">🖼️</div>
-            <div class="upload-text">Arrastra una imagen aquí o haz clic para seleccionar</div>
-            <div class="upload-hint">JPG, PNG, GIF, WEBP · Máximo 10 MB</div>
-            <img id="preview-img" class="preview-img" alt="Vista previa" />
+
+          <!-- Imagen 1 -->
+          <div style="margin-bottom:16px;">
+            <label style="margin-bottom:8px;display:block;">Imagen 1</label>
+            <div class="upload-zone" id="upload-zone-1" onclick="document.getElementById('imagen1').click()">
+              <input type="file" id="imagen1" accept="image/*" style="display:none"
+                onchange="previewUno(this,'preview1','upload-zone-1')" />
+              <div class="upload-icon">🖼️</div>
+              <div class="upload-text" id="texto1">Toca para seleccionar imagen</div>
+              <div class="upload-hint">JPG, PNG, GIF, WEBP · Máximo 10 MB</div>
+              <img id="preview1" class="preview-img" alt="Vista previa 1" />
+            </div>
+          </div>
+
+          <!-- Imagen 2 -->
+          <div>
+            <label style="margin-bottom:8px;display:block;">Imagen 2 (opcional)</label>
+            <div class="upload-zone" id="upload-zone-2" onclick="document.getElementById('imagen2').click()">
+              <input type="file" id="imagen2" accept="image/*" style="display:none"
+                onchange="previewUno(this,'preview2','upload-zone-2')" />
+              <div class="upload-icon">🖼️</div>
+              <div class="upload-text" id="texto2">Toca para seleccionar imagen</div>
+              <div class="upload-hint">JPG, PNG, GIF, WEBP · Máximo 10 MB</div>
+              <img id="preview2" class="preview-img" alt="Vista previa 2" />
+            </div>
           </div>
         </div>
 
@@ -1373,49 +1385,19 @@
       if (mediaBtn) seleccionarPrioridad(mediaBtn);
     });
 
-    function previewImagen(input) {
-      const img = document.getElementById("preview-img");
-      const contenedor = document.getElementById("upload-zone");
-
-      // Quitar previews anteriores
-      contenedor.querySelectorAll(".preview-extra").forEach(e => e.remove());
-
-      if (input.files && input.files.length > 0) {
-        Array.from(input.files).forEach((file, index) => {
-          const reader = new FileReader();
-          reader.onload = e => {
-            if (index === 0) {
-              img.src = e.target.result;
-              img.style.display = "block";
-            } else {
-              const extra = document.createElement("img");
-              extra.src = e.target.result;
-              extra.className = "preview-img preview-extra";
-              extra.style.display = "block";
-              extra.style.marginTop = "8px";
-              contenedor.appendChild(extra);
-            }
-          };
-          reader.readAsDataURL(file);
-        });
+    function previewUno(input, previewId, zonaId) {
+      const img = document.getElementById(previewId);
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          img.src = e.target.result;
+          img.style.display = "block";
+          document.getElementById(zonaId).querySelector(".upload-text").textContent = input.files[0].name;
+        };
+        reader.readAsDataURL(input.files[0]);
       }
     }
 
-    // Drag and drop
-    const uploadZone = document.getElementById("upload-zone");
-    uploadZone.addEventListener("dragover", e => { e.preventDefault(); uploadZone.classList.add("dragover"); });
-    uploadZone.addEventListener("dragleave", () => uploadZone.classList.remove("dragover"));
-    uploadZone.addEventListener("drop", e => {
-      e.preventDefault();
-      uploadZone.classList.remove("dragover");
-      const file = e.dataTransfer.files[0];
-      if (file && file.type.startsWith("image/")) {
-        const dt = new DataTransfer();
-        dt.items.add(file);
-        document.getElementById("imagen").files = dt.files;
-        previewImagen(document.getElementById("imagen"));
-      }
-    });
 
     async function enviarReporte() {
       const campos = ["nombre_docente", "correo_docente", "tipo_error", "descripcion", "fecha_ocurrencia"];
@@ -1453,12 +1435,10 @@
         formData.append("fecha_ocurrencia", document.getElementById("fecha_ocurrencia").value);
         formData.append("prioridad", document.getElementById("prioridad").value);
 
-        const imgFiles = document.getElementById("imagen").files;
-        if (imgFiles.length > 0) {
-          Array.from(imgFiles).forEach(file => {
-            formData.append("imagenes", file);
-          });
-        }
+        const img1 = document.getElementById("imagen1").files[0];
+        const img2 = document.getElementById("imagen2").files[0];
+        if (img1) formData.append("imagenes", img1);
+        if (img2) formData.append("imagenes", img2);
 
         const res = await fetch(`${API_URL}/api/reportes`, {
           method: "POST",
@@ -1482,9 +1462,12 @@
         document.getElementById("descripcion").value = "";
         document.getElementById("salon").value = "";
         document.getElementById("fecha_ocurrencia").value = new Date().toISOString().split("T")[0];
-        document.getElementById("imagen").value = "";
-        document.getElementById("preview-img").style.display = "none";
-        document.getElementById("upload-zone").querySelectorAll(".preview-extra").forEach(e => e.remove());
+        document.getElementById("imagen1").value = "";
+        document.getElementById("imagen2").value = "";
+        document.getElementById("preview1").style.display = "none";
+        document.getElementById("preview2").style.display = "none";
+        document.getElementById("texto1").textContent = "Toca para seleccionar imagen";
+        document.getElementById("texto2").textContent = "Toca para seleccionar imagen";
         document.getElementById("prioridad").value = "Media";
 
       } catch (err) {
@@ -1509,8 +1492,12 @@
       document.getElementById("descripcion").value = "";
       document.getElementById("salon").value = "";
       document.getElementById("fecha_ocurrencia").value = new Date().toISOString().split("T")[0];
-      document.getElementById("imagen").value = "";
-      document.getElementById("preview-img").style.display = "none";
+      document.getElementById("imagen1").value = "";
+      document.getElementById("imagen2").value = "";
+      document.getElementById("preview1").style.display = "none";
+      document.getElementById("preview2").style.display = "none";
+      document.getElementById("texto1").textContent = "Toca para seleccionar imagen";
+      document.getElementById("texto2").textContent = "Toca para seleccionar imagen";
 
       // Resetear prioridad a Media
       document.querySelectorAll(".prioridad-btn").forEach(b => b.style.opacity = "0.5");
