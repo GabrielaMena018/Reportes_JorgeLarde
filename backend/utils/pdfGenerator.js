@@ -183,7 +183,7 @@ const generarPDFReporte = async (reporte) => {
 
           // ── IMAGEN 1 (arriba) ──
           doc.fillColor(GRIS_TEXTO).font("Helvetica").fontSize(8)
-            .text("IMAGEN 1", 50, y + 6);
+            .text("Evidencia 1", 50, y + 6);
           doc.rect(50, y + 16, 495, altoImg).fill(GRIS_CLARO);
 
           try {
@@ -202,7 +202,7 @@ const generarPDFReporte = async (reporte) => {
 
           // ── IMAGEN 2 (abajo) ──
           doc.fillColor(GRIS_TEXTO).font("Helvetica").fontSize(8)
-            .text("IMAGEN 2", 50, y + 6);
+            .text("Evidencia 2", 50, y + 6);
           doc.rect(50, y + 16, 495, altoImg).fill(GRIS_CLARO);
 
           try {
