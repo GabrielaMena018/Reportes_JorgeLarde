@@ -23,7 +23,7 @@ const upload = multer({
 });
 
 // POST /api/reportes — Crear nuevo reporte
-router.post("/", upload.single("imagen"), async (req, res) => {
+router.post("/", upload.array("imagenes", 2), async (req, res) => {
   try {
     const {
       nombre_docente,
@@ -52,16 +52,15 @@ router.post("/", upload.single("imagen"), async (req, res) => {
     };
 
     // Subir imagen a Cloudinary si viene adjunta
-    if (req.file) {
-      const resultadoCloudinary = await subirImagenACloudinary(
-        req.file.buffer,
-        "reportes_errores"
+    if (req.files && req.files.length > 0) {
+      const uploads = await Promise.all(
+        req.files.map(file => subirImagenACloudinary(file.buffer, "reportes_errores"))
       );
-      datosReporte.imagen = {
-        url: resultadoCloudinary.secure_url,
-        public_id: resultadoCloudinary.public_id,
-        nombre_original: req.file.originalname,
-      };
+      datosReporte.imagenes = uploads.map((result, i) => ({
+        url: result.secure_url,
+        public_id: result.public_id,
+        nombre_original: req.files[i].originalname,
+      }));
     }
 
     // Guardar en MongoDB

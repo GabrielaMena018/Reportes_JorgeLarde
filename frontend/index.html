@@ -1,30 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sistema de Reportes de Conexión</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
   <style>
     /* ── Reset & Variables ─────────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     :root {
-      --azul-oscuro:   #1a2a4a;
-      --azul-medio:    #2563eb;
-      --azul-claro:    #eff6ff;
-      --azul-borde:    #bfdbfe;
-      --verde:         #16a34a;
-      --rojo:          #dc2626;
-      --naranja:       #d97706;
-      --gris-bg:       #f1f5f9;
-      --gris-borde:    #e2e8f0;
-      --gris-texto:    #64748b;
-      --texto:         #1e293b;
-      --blanco:        #ffffff;
-      --sombra:        0 4px 24px rgba(0,0,0,0.08);
-      --radio:         12px;
+      --azul-oscuro: #1a2a4a;
+      --azul-medio: #2563eb;
+      --azul-claro: #eff6ff;
+      --azul-borde: #bfdbfe;
+      --verde: #16a34a;
+      --rojo: #dc2626;
+      --naranja: #d97706;
+      --gris-bg: #f1f5f9;
+      --gris-borde: #e2e8f0;
+      --gris-texto: #64748b;
+      --texto: #1e293b;
+      --blanco: #ffffff;
+      --sombra: 0 4px 24px rgba(0, 0, 0, 0.08);
+      --radio: 12px;
     }
 
     body {
@@ -45,7 +54,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
     }
 
     .navbar-brand {
@@ -102,13 +111,18 @@
     }
 
     .tab-btn:hover:not(.active) {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
       color: white;
     }
 
     /* ── Páginas ───────────────────────────────────────────────────────────── */
-    .page { display: none; }
-    .page.active { display: block; }
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
 
     /* ── Formulario Docente ────────────────────────────────────────────────── */
     .form-hero {
@@ -147,7 +161,9 @@
       border-bottom: 1px solid var(--gris-borde);
     }
 
-    .form-section:last-of-type { border-bottom: none; }
+    .form-section:last-of-type {
+      border-bottom: none;
+    }
 
     .section-header {
       display: flex;
@@ -180,8 +196,15 @@
       gap: 16px;
     }
 
-    .form-group { display: flex; flex-direction: column; gap: 6px; }
-    .form-group.full { grid-column: 1 / -1; }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
 
     label {
       font-size: 12px;
@@ -191,9 +214,14 @@
       letter-spacing: 0.5px;
     }
 
-    label .req { color: var(--rojo); margin-left: 2px; }
+    label .req {
+      color: var(--rojo);
+      margin-left: 2px;
+    }
 
-    input, select, textarea {
+    input,
+    select,
+    textarea {
       border: 1.5px solid var(--gris-borde);
       border-radius: 8px;
       padding: 10px 14px;
@@ -206,12 +234,17 @@
       width: 100%;
     }
 
-    input:focus, select:focus, textarea:focus {
+    input:focus,
+    select:focus,
+    textarea:focus {
       border-color: var(--azul-medio);
-      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
     }
 
-    textarea { resize: vertical; min-height: 100px; }
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
 
     /* Upload zone */
     .upload-zone {
@@ -225,7 +258,8 @@
       position: relative;
     }
 
-    .upload-zone:hover, .upload-zone.dragover {
+    .upload-zone:hover,
+    .upload-zone.dragover {
       border-color: var(--azul-medio);
       background: #dbeafe;
     }
@@ -241,7 +275,10 @@
       height: 100%;
     }
 
-    .upload-icon { font-size: 32px; margin-bottom: 8px; }
+    .upload-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
 
     .upload-text {
       font-size: 14px;
@@ -249,7 +286,11 @@
       font-weight: 600;
     }
 
-    .upload-hint { font-size: 12px; color: var(--gris-texto); margin-top: 4px; }
+    .upload-hint {
+      font-size: 12px;
+      color: var(--gris-texto);
+      margin-top: 4px;
+    }
 
     .preview-img {
       max-width: 100%;
@@ -277,11 +318,33 @@
       font-weight: 600;
     }
 
-    .prioridad-btn:hover { transform: translateY(-1px); }
-    .prioridad-btn.sel-baja { border-color: var(--verde); background: #f0fdf4; color: var(--verde); }
-    .prioridad-btn.sel-media { border-color: var(--naranja); background: #fffbeb; color: var(--naranja); }
-    .prioridad-btn.sel-alta { border-color: #ea580c; background: #fff7ed; color: #ea580c; }
-    .prioridad-btn.sel-critica { border-color: var(--rojo); background: #fef2f2; color: var(--rojo); }
+    .prioridad-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .prioridad-btn.sel-baja {
+      border-color: var(--verde);
+      background: #f0fdf4;
+      color: var(--verde);
+    }
+
+    .prioridad-btn.sel-media {
+      border-color: var(--naranja);
+      background: #fffbeb;
+      color: var(--naranja);
+    }
+
+    .prioridad-btn.sel-alta {
+      border-color: #ea580c;
+      background: #fff7ed;
+      color: #ea580c;
+    }
+
+    .prioridad-btn.sel-critica {
+      border-color: var(--rojo);
+      background: #fef2f2;
+      color: var(--rojo);
+    }
 
     .submit-btn {
       width: 100%;
@@ -302,8 +365,15 @@
       margin-top: 8px;
     }
 
-    .submit-btn:hover:not(:disabled) { background: #1d4ed8; transform: translateY(-1px); }
-    .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+    .submit-btn:hover:not(:disabled) {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
 
     /* Toast */
     .toast {
@@ -315,7 +385,7 @@
       color: white;
       font-size: 14px;
       font-weight: 500;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
       z-index: 9999;
       max-width: 360px;
       opacity: 0;
@@ -324,9 +394,18 @@
       pointer-events: none;
     }
 
-    .toast.show { opacity: 1; transform: translateY(0); }
-    .toast.success { background: var(--verde); }
-    .toast.error { background: var(--rojo); }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast.success {
+      background: var(--verde);
+    }
+
+    .toast.error {
+      background: var(--rojo);
+    }
 
     /* Ticket result */
     .ticket-result {
@@ -339,7 +418,10 @@
       margin: 0 32px 28px;
     }
 
-    .ticket-result.show { display: block; }
+    .ticket-result.show {
+      display: block;
+    }
+
     .ticket-number {
       font-family: 'JetBrains Mono', monospace;
       font-size: 26px;
@@ -366,7 +448,10 @@
       max-width: 420px;
     }
 
-    .login-header { text-align: center; margin-bottom: 32px; }
+    .login-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
 
     .login-logo {
       width: 64px;
@@ -380,8 +465,16 @@
       margin: 0 auto 16px;
     }
 
-    .login-header h2 { color: var(--azul-oscuro); font-size: 22px; }
-    .login-header p { color: var(--gris-texto); font-size: 13px; margin-top: 4px; }
+    .login-header h2 {
+      color: var(--azul-oscuro);
+      font-size: 22px;
+    }
+
+    .login-header p {
+      color: var(--gris-texto);
+      font-size: 13px;
+      margin-top: 4px;
+    }
 
     .login-btn {
       width: 100%;
@@ -398,7 +491,9 @@
       margin-top: 8px;
     }
 
-    .login-btn:hover { background: #0f1d35; }
+    .login-btn:hover {
+      background: #0f1d35;
+    }
 
     /* ── Admin Panel ───────────────────────────────────────────────────────── */
     .admin-layout {
@@ -406,7 +501,9 @@
       min-height: calc(100vh - 64px);
     }
 
-    .admin-layout.show { display: flex; }
+    .admin-layout.show {
+      display: flex;
+    }
 
     .sidebar {
       width: 240px;
@@ -416,7 +513,11 @@
       min-height: calc(100vh - 64px);
     }
 
-    .sidebar-menu { display: flex; flex-direction: column; gap: 4px; }
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
 
     .sidebar-item {
       padding: 10px 14px;
@@ -431,8 +532,15 @@
       gap: 10px;
     }
 
-    .sidebar-item:hover { background: rgba(255,255,255,0.08); color: white; }
-    .sidebar-item.active { background: var(--azul-medio); color: white; }
+    .sidebar-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+    }
+
+    .sidebar-item.active {
+      background: var(--azul-medio);
+      color: white;
+    }
 
     .sidebar-logout {
       margin-top: auto;
@@ -448,7 +556,9 @@
       margin-top: 40px;
     }
 
-    .sidebar-logout:hover { background: rgba(248,113,113,0.1); }
+    .sidebar-logout:hover {
+      background: rgba(248, 113, 113, 0.1);
+    }
 
     .admin-content {
       flex: 1;
@@ -463,7 +573,11 @@
       margin-bottom: 24px;
     }
 
-    .admin-header h2 { font-size: 20px; font-weight: 700; color: var(--azul-oscuro); }
+    .admin-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--azul-oscuro);
+    }
 
     /* Stats */
     .stats-grid {
@@ -481,12 +595,29 @@
       border-left: 4px solid var(--azul-medio);
     }
 
-    .stat-card.pendiente { border-color: var(--naranja); }
-    .stat-card.critico { border-color: var(--rojo); }
-    .stat-card.resuelto { border-color: var(--verde); }
+    .stat-card.pendiente {
+      border-color: var(--naranja);
+    }
 
-    .stat-num { font-size: 32px; font-weight: 700; color: var(--azul-oscuro); }
-    .stat-label { font-size: 12px; color: var(--gris-texto); margin-top: 4px; }
+    .stat-card.critico {
+      border-color: var(--rojo);
+    }
+
+    .stat-card.resuelto {
+      border-color: var(--verde);
+    }
+
+    .stat-num {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--azul-oscuro);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--gris-texto);
+      margin-top: 4px;
+    }
 
     /* Filters */
     .filters-bar {
@@ -501,7 +632,8 @@
       align-items: center;
     }
 
-    .filters-bar input, .filters-bar select {
+    .filters-bar input,
+    .filters-bar select {
       padding: 8px 12px;
       font-size: 13px;
       border-radius: 8px;
@@ -511,9 +643,12 @@
       outline: none;
     }
 
-    .filters-bar input { width: 220px; }
+    .filters-bar input {
+      width: 220px;
+    }
 
-    .filters-bar input:focus, .filters-bar select:focus {
+    .filters-bar input:focus,
+    .filters-bar select:focus {
       border-color: var(--azul-medio);
     }
 
@@ -525,11 +660,19 @@
       overflow: hidden;
     }
 
-    .table-scroll { overflow-x: auto; }
+    .table-scroll {
+      overflow-x: auto;
+    }
 
-    table { width: 100%; border-collapse: collapse; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
-    thead tr { background: var(--azul-oscuro); }
+    thead tr {
+      background: var(--azul-oscuro);
+    }
+
     thead th {
       padding: 12px 16px;
       text-align: left;
@@ -545,8 +688,13 @@
       transition: background 0.15s;
     }
 
-    tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: var(--gris-bg); }
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: var(--gris-bg);
+    }
 
     td {
       padding: 14px 16px;
@@ -562,14 +710,45 @@
       font-weight: 600;
     }
 
-    .badge-pendiente { background: #fffbeb; color: var(--naranja); }
-    .badge-revision { background: var(--azul-claro); color: var(--azul-medio); }
-    .badge-resuelto { background: #f0fdf4; color: var(--verde); }
-    .badge-cerrado { background: var(--gris-bg); color: var(--gris-texto); }
-    .badge-baja { background: #f0fdf4; color: var(--verde); }
-    .badge-media { background: #fffbeb; color: var(--naranja); }
-    .badge-alta { background: #fff7ed; color: #ea580c; }
-    .badge-critica { background: #fef2f2; color: var(--rojo); }
+    .badge-pendiente {
+      background: #fffbeb;
+      color: var(--naranja);
+    }
+
+    .badge-revision {
+      background: var(--azul-claro);
+      color: var(--azul-medio);
+    }
+
+    .badge-resuelto {
+      background: #f0fdf4;
+      color: var(--verde);
+    }
+
+    .badge-cerrado {
+      background: var(--gris-bg);
+      color: var(--gris-texto);
+    }
+
+    .badge-baja {
+      background: #f0fdf4;
+      color: var(--verde);
+    }
+
+    .badge-media {
+      background: #fffbeb;
+      color: var(--naranja);
+    }
+
+    .badge-alta {
+      background: #fff7ed;
+      color: #ea580c;
+    }
+
+    .badge-critica {
+      background: #fef2f2;
+      color: var(--rojo);
+    }
 
     .ticket-code {
       font-family: 'JetBrains Mono', monospace;
@@ -590,16 +769,25 @@
       transition: all 0.15s;
     }
 
-    .action-btn:hover { border-color: var(--azul-medio); color: var(--azul-medio); }
+    .action-btn:hover {
+      border-color: var(--azul-medio);
+      color: var(--azul-medio);
+    }
 
-    .action-btn.pdf { border-color: var(--rojo); color: var(--rojo); }
-    .action-btn.pdf:hover { background: #fef2f2; }
+    .action-btn.pdf {
+      border-color: var(--rojo);
+      color: var(--rojo);
+    }
+
+    .action-btn.pdf:hover {
+      background: #fef2f2;
+    }
 
     /* Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0, 0, 0, 0.5);
       z-index: 1000;
       display: none;
       align-items: center;
@@ -607,7 +795,9 @@
       padding: 1rem;
     }
 
-    .modal-overlay.show { display: flex; }
+    .modal-overlay.show {
+      display: flex;
+    }
 
     .modal {
       background: white;
@@ -616,7 +806,7 @@
       max-width: 680px;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     }
 
     .modal-header {
@@ -627,7 +817,10 @@
       justify-content: space-between;
     }
 
-    .modal-header h3 { color: white; font-size: 16px; }
+    .modal-header h3 {
+      color: white;
+      font-size: 16px;
+    }
 
     .modal-close {
       background: none;
@@ -639,9 +832,13 @@
       line-height: 1;
     }
 
-    .modal-close:hover { color: white; }
+    .modal-close:hover {
+      color: white;
+    }
 
-    .modal-body { padding: 24px; }
+    .modal-body {
+      padding: 24px;
+    }
 
     .detail-row {
       display: grid;
@@ -702,7 +899,9 @@
       font-family: inherit;
     }
 
-    .btn-guardar:hover { background: #1d4ed8; }
+    .btn-guardar:hover {
+      background: #1d4ed8;
+    }
 
     .btn-pdf-modal {
       padding: 8px 20px;
@@ -716,7 +915,9 @@
       font-family: inherit;
     }
 
-    .btn-pdf-modal:hover { background: #b91c1c; }
+    .btn-pdf-modal:hover {
+      background: #b91c1c;
+    }
 
     /* Empty state */
     .empty-state {
@@ -725,468 +926,583 @@
       color: var(--gris-texto);
     }
 
-    .empty-state .emoji { font-size: 48px; margin-bottom: 12px; }
+    .empty-state .emoji {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
 
     /* Loading spinner */
     .spinner {
       width: 20px;
       height: 20px;
-      border: 2px solid rgba(255,255,255,0.3);
+      border: 2px solid rgba(255, 255, 255, 0.3);
       border-top-color: white;
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
       display: none;
     }
 
-    .spinner.show { display: block; }
+    .spinner.show {
+      display: block;
+    }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
     /* Responsive */
     @media (max-width: 768px) {
-      .form-grid { grid-template-columns: 1fr; }
-      .prioridad-grid { grid-template-columns: 1fr 1fr; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-      .form-section { padding: 20px; }
-      .admin-layout { flex-direction: column; }
-      .sidebar { width: 100%; min-height: auto; padding: 16px; }
-      .sidebar-menu { flex-direction: row; flex-wrap: wrap; }
-      .detail-row { grid-template-columns: 1fr; }
-      .navbar-tabs { display: none; }
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .prioridad-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .form-section {
+        padding: 20px;
+      }
+
+      .admin-layout {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        min-height: auto;
+        padding: 16px;
+      }
+
+      .sidebar-menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .detail-row {
+        grid-template-columns: 1fr;
+      }
+
+      .navbar-tabs {
+        display: none;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<!-- ── Navbar ──────────────────────────────────────────────────────────────── -->
-<nav class="navbar">
-  <div class="navbar-brand">
-    <div class="navbar-icon">⚠️</div>
-    <div>
-      <div class="navbar-title">Reportes de Conexión</div>
-      <div class="navbar-subtitle">Sistema de Incidencias</div>
+  <!-- ── Navbar ──────────────────────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-icon">⚠️</div>
+      <div>
+        <div class="navbar-title">Reportes de Conexión</div>
+        <div class="navbar-subtitle">Sistema de Incidencias</div>
+      </div>
+    </div>
+    <div class="navbar-tabs">
+      <button class="tab-btn active" onclick="mostrarPagina('docente')">📋 Reportar Error</button>
+      <button class="tab-btn" onclick="mostrarPagina('admin')">🔐 Administrador</button>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════════════════════════ -->
+  <!-- PÁGINA: FORMULARIO DOCENTE                                                -->
+  <!-- ══════════════════════════════════════════════════════════════════════════ -->
+  <div id="page-docente" class="page active">
+
+    <div class="form-hero">
+      <h1>📡 Reportar Error de Conexión</h1>
+      <p>Completa el formulario y el equipo técnico recibirá tu reporte inmediatamente</p>
+    </div>
+
+    <div class="form-wrapper">
+      <div class="form-card">
+
+        <!-- Resultado del ticket -->
+        <div id="ticket-result" class="ticket-result">
+          <div style="font-size:48px;margin-bottom:12px;">✅</div>
+          <p style="color:#15803d;font-weight:600;font-size:16px;margin-bottom:8px;">¡Reporte enviado exitosamente!</p>
+          <p style="color:#64748b;font-size:13px;margin-bottom:16px;">Guarda tu número de ticket para dar seguimiento
+          </p>
+          <div class="ticket-number" id="ticket-number-display">—</div>
+          <button onclick="nuevoReporte()"
+            style="margin-top:16px;padding:10px 24px;background:#16a34a;color:white;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;font-family:inherit;">Enviar
+            otro reporte</button>
+        </div>
+
+        <!-- Sección 1: Datos del docente -->
+        <div class="form-section" id="form-main">
+          <div class="section-header">
+            <div class="section-icon">👤</div>
+            <div class="section-title">Información del docente</div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Nombre completo <span class="req">*</span></label>
+              <input type="text" id="nombre_docente" placeholder="Ej: Ana García López" required />
+            </div>
+            <div class="form-group">
+              <label>Correo electrónico <span class="req">*</span></label>
+              <input type="email" id="correo_docente" placeholder="correo@institucion.edu.sv" required />
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Sección 2: Detalles del error -->
+        <div class="form-section">
+          <div class="section-header">
+            <div class="section-icon">🔧</div>
+            <div class="section-title">Detalles del error</div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Tipo de error <span class="req">*</span></label>
+              <select id="tipo_error" required>
+                <option value="">Selecciona el tipo...</option>
+                <option>Sin internet</option>
+                <option>Conexión lenta</option>
+                <option>WiFi no conecta</option>
+                <option>Error de plataforma</option>
+                <option>Otro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Salón / Aula</label>
+              <input type="text" id="salon" placeholder="Ej: Aula 4-B, Lab. Informática" />
+            </div>
+            <div class="form-group">
+              <label>Fecha en que ocurrió <span class="req">*</span></label>
+              <input type="date" id="fecha_ocurrencia" required />
+            </div>
+            <div class="form-group"></div>
+            <div class="form-group full">
+              <label>Descripción detallada del problema <span class="req">*</span></label>
+              <textarea id="descripcion"
+                placeholder="Describe el problema con el mayor detalle posible: ¿qué estabas haciendo?, ¿qué mensaje aparece en pantalla?, ¿cuántos equipos están afectados?..."
+                required></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección 3: Prioridad -->
+        <div class="form-section">
+          <div class="section-header">
+            <div class="section-icon">🚦</div>
+            <div class="section-title">Nivel de urgencia</div>
+          </div>
+          <div class="prioridad-grid" id="prioridad-grid">
+            <div class="prioridad-btn sel-baja" data-valor="Baja" onclick="seleccionarPrioridad(this)">🟢 Baja<br><small
+                style="font-weight:400">Puede esperar</small></div>
+            <div class="prioridad-btn sel-media active-prioridad" data-valor="Media"
+              onclick="seleccionarPrioridad(this)"
+              style="border-width:2px;border-color:#d97706;background:#fffbeb;color:#d97706;">🟡 Media<br><small
+                style="font-weight:400">Hoy mismo</small></div>
+            <div class="prioridad-btn sel-alta" data-valor="Alta" onclick="seleccionarPrioridad(this)">🟠 Alta<br><small
+                style="font-weight:400">Urgente</small></div>
+            <div class="prioridad-btn sel-critica" data-valor="Crítica" onclick="seleccionarPrioridad(this)">🔴
+              Crítica<br><small style="font-weight:400">Inmediato</small></div>
+          </div>
+          <input type="hidden" id="prioridad" value="Media" />
+        </div>
+
+        <!-- Sección 4: Imagen -->
+        <div class="form-section">
+          <div class="section-header">
+            <div class="section-icon">📸</div>
+            <div class="section-title">Evidencia fotográfica (opcional)</div>
+          </div>
+          <div class="upload-zone" id="upload-zone">
+            <input type="file" id="imagen" accept="image/*" multiple onchange="previewImagen(this)" />
+            <div class="upload-icon">🖼️</div>
+            <div class="upload-text">Arrastra una imagen aquí o haz clic para seleccionar</div>
+            <div class="upload-hint">JPG, PNG, GIF, WEBP · Máximo 10 MB</div>
+            <img id="preview-img" class="preview-img" alt="Vista previa" />
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="form-section">
+          <button class="submit-btn" id="submit-btn" onclick="enviarReporte()">
+            <span id="submit-text">📤 Enviar reporte</span>
+            <div class="spinner" id="submit-spinner"></div>
+          </button>
+        </div>
+
+      </div>
     </div>
   </div>
-  <div class="navbar-tabs">
-    <button class="tab-btn active" onclick="mostrarPagina('docente')">📋 Reportar Error</button>
-    <button class="tab-btn" onclick="mostrarPagina('admin')">🔐 Administrador</button>
-  </div>
-</nav>
 
-<!-- ══════════════════════════════════════════════════════════════════════════ -->
-<!-- PÁGINA: FORMULARIO DOCENTE                                                -->
-<!-- ══════════════════════════════════════════════════════════════════════════ -->
-<div id="page-docente" class="page active">
+  <!-- ══════════════════════════════════════════════════════════════════════════ -->
+  <!-- PÁGINA: ADMINISTRADOR                                                     -->
+  <!-- ══════════════════════════════════════════════════════════════════════════ -->
+  <div id="page-admin" class="page">
 
-  <div class="form-hero">
-    <h1>📡 Reportar Error de Conexión</h1>
-    <p>Completa el formulario y el equipo técnico recibirá tu reporte inmediatamente</p>
-  </div>
-
-  <div class="form-wrapper">
-    <div class="form-card">
-
-      <!-- Resultado del ticket -->
-      <div id="ticket-result" class="ticket-result">
-        <div style="font-size:48px;margin-bottom:12px;">✅</div>
-        <p style="color:#15803d;font-weight:600;font-size:16px;margin-bottom:8px;">¡Reporte enviado exitosamente!</p>
-        <p style="color:#64748b;font-size:13px;margin-bottom:16px;">Guarda tu número de ticket para dar seguimiento</p>
-        <div class="ticket-number" id="ticket-number-display">—</div>
-        <button onclick="nuevoReporte()" style="margin-top:16px;padding:10px 24px;background:#16a34a;color:white;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;font-family:inherit;">Enviar otro reporte</button>
-      </div>
-
-      <!-- Sección 1: Datos del docente -->
-      <div class="form-section" id="form-main">
-        <div class="section-header">
-          <div class="section-icon">👤</div>
-          <div class="section-title">Información del docente</div>
+    <!-- Login -->
+    <div class="login-wrapper" id="admin-login">
+      <div class="login-card">
+        <div class="login-header">
+          <div class="login-logo">🔐</div>
+          <h2>Acceso Administrador</h2>
+          <p>Ingresa tus credenciales para continuar</p>
         </div>
-        <div class="form-grid">
+        <div style="display:flex;flex-direction:column;gap:14px;">
           <div class="form-group">
-            <label>Nombre completo <span class="req">*</span></label>
-            <input type="text" id="nombre_docente" placeholder="Ej: Ana García López" required />
+            <label>Usuario</label>
+            <input type="text" id="login-user" placeholder="admin" onkeydown="if(event.key==='Enter')hacerLogin()" />
           </div>
           <div class="form-group">
-            <label>Correo electrónico <span class="req">*</span></label>
-            <input type="email" id="correo_docente" placeholder="correo@institucion.edu.sv" required />
+            <label>Contraseña</label>
+            <input type="password" id="login-pass" placeholder="••••••••"
+              onkeydown="if(event.key==='Enter')hacerLogin()" />
           </div>
-         
+          <div id="login-error" style="color:#dc2626;font-size:13px;display:none;text-align:center;"></div>
+          <button class="login-btn" onclick="hacerLogin()">Iniciar sesión</button>
         </div>
       </div>
+    </div>
 
-      <!-- Sección 2: Detalles del error -->
-      <div class="form-section">
-        <div class="section-header">
-          <div class="section-icon">🔧</div>
-          <div class="section-title">Detalles del error</div>
+    <!-- Panel -->
+    <div class="admin-layout" id="admin-panel">
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="sidebar-menu">
+          <div class="sidebar-item active" onclick="mostrarVista('dashboard')">📊 Dashboard</div>
+          <div class="sidebar-item" onclick="mostrarVista('reportes')">📋 Reportes</div>
         </div>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Tipo de error <span class="req">*</span></label>
-            <select id="tipo_error" required>
-              <option value="">Selecciona el tipo...</option>
-              <option>Sin internet</option>
-              <option>Conexión lenta</option>
-              <option>WiFi no conecta</option>
-              <option>Error de plataforma</option>
-              <option>Otro</option>
+        <div class="sidebar-logout" onclick="cerrarSesion()">🚪 Cerrar sesión</div>
+      </div>
+
+      <!-- Contenido -->
+      <div class="admin-content">
+
+        <!-- Vista: Dashboard -->
+        <div id="vista-dashboard">
+          <div class="admin-header">
+            <h2>📊 Dashboard</h2>
+            <span style="font-size:13px;color:#64748b;" id="welcome-msg"></span>
+          </div>
+          <div class="stats-grid" id="stats-grid">
+            <div class="stat-card">
+              <div class="stat-num" id="stat-total">—</div>
+              <div class="stat-label">Total de reportes</div>
+            </div>
+            <div class="stat-card pendiente">
+              <div class="stat-num" id="stat-pendientes">—</div>
+              <div class="stat-label">Pendientes</div>
+            </div>
+            <div class="stat-card critico">
+              <div class="stat-num" id="stat-criticos">—</div>
+              <div class="stat-label">Críticos</div>
+            </div>
+            <div class="stat-card resuelto">
+              <div class="stat-num" id="stat-resueltos">—</div>
+              <div class="stat-label">Resueltos</div>
+            </div>
+          </div>
+
+          <div class="table-card">
+            <div style="padding:16px 20px;border-bottom:1px solid var(--gris-borde);">
+              <strong style="font-size:15px;color:var(--azul-oscuro);">Reportes recientes</strong>
+            </div>
+            <div id="tabla-recientes"></div>
+          </div>
+        </div>
+
+        <!-- Vista: Todos los reportes -->
+        <div id="vista-reportes" style="display:none;">
+          <div class="admin-header">
+            <h2>📋 Todos los reportes</h2>
+            <button onclick="cargarReportes()"
+              style="padding:8px 16px;background:var(--azul-medio);color:white;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-family:inherit;">🔄
+              Actualizar</button>
+          </div>
+
+          <div class="filters-bar">
+            <input type="text" id="buscar-input" placeholder="🔍 Buscar por nombre, ticket..."
+              oninput="filtrarReportes()" />
+            <select id="filtro-estado" onchange="filtrarReportes()">
+              <option value="">Todos los estados</option>
+              <option>Pendiente</option>
+              <option>En revisión</option>
+              <option>Resuelto</option>
+              <option>Cerrado</option>
+            </select>
+            <select id="filtro-prioridad" onchange="filtrarReportes()">
+              <option value="">Todas las prioridades</option>
+              <option>Baja</option>
+              <option>Media</option>
+              <option>Alta</option>
+              <option>Crítica</option>
             </select>
           </div>
-          <div class="form-group">
-            <label>Salón / Aula</label>
-            <input type="text" id="salon" placeholder="Ej: Aula 4-B, Lab. Informática" />
+
+          <div class="table-card">
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Ticket</th>
+                    <th>Docente</th>
+                    <th>Tipo</th>
+                    <th>Estado</th>
+                    <th>Prioridad</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="tabla-reportes-body"></tbody>
+              </table>
+            </div>
+            <div id="tabla-empty" class="empty-state" style="display:none;">
+              <div class="emoji">📭</div>
+              <p>No se encontraron reportes</p>
+            </div>
           </div>
-          <div class="form-group">
-            <label>Fecha en que ocurrió <span class="req">*</span></label>
-            <input type="date" id="fecha_ocurrencia" required />
-          </div>
-          <div class="form-group"></div>
-          <div class="form-group full">
-            <label>Descripción detallada del problema <span class="req">*</span></label>
-            <textarea id="descripcion" placeholder="Describe el problema con el mayor detalle posible: ¿qué estabas haciendo?, ¿qué mensaje aparece en pantalla?, ¿cuántos equipos están afectados?..." required></textarea>
-          </div>
         </div>
-      </div>
 
-      <!-- Sección 3: Prioridad -->
-      <div class="form-section">
-        <div class="section-header">
-          <div class="section-icon">🚦</div>
-          <div class="section-title">Nivel de urgencia</div>
-        </div>
-        <div class="prioridad-grid" id="prioridad-grid">
-          <div class="prioridad-btn sel-baja" data-valor="Baja" onclick="seleccionarPrioridad(this)">🟢 Baja<br><small style="font-weight:400">Puede esperar</small></div>
-          <div class="prioridad-btn sel-media active-prioridad" data-valor="Media" onclick="seleccionarPrioridad(this)" style="border-width:2px;border-color:#d97706;background:#fffbeb;color:#d97706;">🟡 Media<br><small style="font-weight:400">Hoy mismo</small></div>
-          <div class="prioridad-btn sel-alta" data-valor="Alta" onclick="seleccionarPrioridad(this)">🟠 Alta<br><small style="font-weight:400">Urgente</small></div>
-          <div class="prioridad-btn sel-critica" data-valor="Crítica" onclick="seleccionarPrioridad(this)">🔴 Crítica<br><small style="font-weight:400">Inmediato</small></div>
-        </div>
-        <input type="hidden" id="prioridad" value="Media" />
-      </div>
-
-      <!-- Sección 4: Imagen -->
-      <div class="form-section">
-        <div class="section-header">
-          <div class="section-icon">📸</div>
-          <div class="section-title">Evidencia fotográfica (opcional)</div>
-        </div>
-        <div class="upload-zone" id="upload-zone">
-          <input type="file" id="imagen" accept="image/*" onchange="previewImagen(this)" />
-          <div class="upload-icon">🖼️</div>
-          <div class="upload-text">Arrastra una imagen aquí o haz clic para seleccionar</div>
-          <div class="upload-hint">JPG, PNG, GIF, WEBP · Máximo 10 MB</div>
-          <img id="preview-img" class="preview-img" alt="Vista previa" />
-        </div>
-      </div>
-
-      <!-- Submit -->
-      <div class="form-section">
-        <button class="submit-btn" id="submit-btn" onclick="enviarReporte()">
-          <span id="submit-text">📤 Enviar reporte</span>
-          <div class="spinner" id="submit-spinner"></div>
-        </button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════════════════════════ -->
-<!-- PÁGINA: ADMINISTRADOR                                                     -->
-<!-- ══════════════════════════════════════════════════════════════════════════ -->
-<div id="page-admin" class="page">
-
-  <!-- Login -->
-  <div class="login-wrapper" id="admin-login">
-    <div class="login-card">
-      <div class="login-header">
-        <div class="login-logo">🔐</div>
-        <h2>Acceso Administrador</h2>
-        <p>Ingresa tus credenciales para continuar</p>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:14px;">
-        <div class="form-group">
-          <label>Usuario</label>
-          <input type="text" id="login-user" placeholder="admin" onkeydown="if(event.key==='Enter')hacerLogin()" />
-        </div>
-        <div class="form-group">
-          <label>Contraseña</label>
-          <input type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')hacerLogin()" />
-        </div>
-        <div id="login-error" style="color:#dc2626;font-size:13px;display:none;text-align:center;"></div>
-        <button class="login-btn" onclick="hacerLogin()">Iniciar sesión</button>
       </div>
     </div>
   </div>
 
-  <!-- Panel -->
-  <div class="admin-layout" id="admin-panel">
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <div class="sidebar-menu">
-        <div class="sidebar-item active" onclick="mostrarVista('dashboard')">📊 Dashboard</div>
-        <div class="sidebar-item" onclick="mostrarVista('reportes')">📋 Reportes</div>
+  <!-- Modal detalle -->
+  <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)cerrarModal()">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-titulo">Detalle del reporte</h3>
+        <button class="modal-close" onclick="cerrarModal()">✕</button>
       </div>
-      <div class="sidebar-logout" onclick="cerrarSesion()">🚪 Cerrar sesión</div>
-    </div>
-
-    <!-- Contenido -->
-    <div class="admin-content">
-
-      <!-- Vista: Dashboard -->
-      <div id="vista-dashboard">
-        <div class="admin-header">
-          <h2>📊 Dashboard</h2>
-          <span style="font-size:13px;color:#64748b;" id="welcome-msg"></span>
-        </div>
-        <div class="stats-grid" id="stats-grid">
-          <div class="stat-card"><div class="stat-num" id="stat-total">—</div><div class="stat-label">Total de reportes</div></div>
-          <div class="stat-card pendiente"><div class="stat-num" id="stat-pendientes">—</div><div class="stat-label">Pendientes</div></div>
-          <div class="stat-card critico"><div class="stat-num" id="stat-criticos">—</div><div class="stat-label">Críticos</div></div>
-          <div class="stat-card resuelto"><div class="stat-num" id="stat-resueltos">—</div><div class="stat-label">Resueltos</div></div>
-        </div>
-
-        <div class="table-card">
-          <div style="padding:16px 20px;border-bottom:1px solid var(--gris-borde);">
-            <strong style="font-size:15px;color:var(--azul-oscuro);">Reportes recientes</strong>
-          </div>
-          <div id="tabla-recientes"></div>
-        </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-actions">
+        <select id="modal-estado" class="estado-select">
+          <option>Pendiente</option>
+          <option>En revisión</option>
+          <option>Resuelto</option>
+          <option>Cerrado</option>
+        </select>
+        <textarea id="modal-notas" placeholder="Notas del administrador..."
+          style="flex:1;padding:8px 12px;border:1.5px solid var(--gris-borde);border-radius:8px;font-family:inherit;font-size:13px;resize:none;height:38px;"
+          onkeydown="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+        <button class="btn-guardar" onclick="guardarCambios()">💾 Guardar</button>
+        <button class="btn-pdf-modal" onclick="descargarPDF()">📄 PDF</button>
       </div>
-
-      <!-- Vista: Todos los reportes -->
-      <div id="vista-reportes" style="display:none;">
-        <div class="admin-header">
-          <h2>📋 Todos los reportes</h2>
-          <button onclick="cargarReportes()" style="padding:8px 16px;background:var(--azul-medio);color:white;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-family:inherit;">🔄 Actualizar</button>
-        </div>
-
-        <div class="filters-bar">
-          <input type="text" id="buscar-input" placeholder="🔍 Buscar por nombre, ticket..." oninput="filtrarReportes()" />
-          <select id="filtro-estado" onchange="filtrarReportes()">
-            <option value="">Todos los estados</option>
-            <option>Pendiente</option>
-            <option>En revisión</option>
-            <option>Resuelto</option>
-            <option>Cerrado</option>
-          </select>
-          <select id="filtro-prioridad" onchange="filtrarReportes()">
-            <option value="">Todas las prioridades</option>
-            <option>Baja</option>
-            <option>Media</option>
-            <option>Alta</option>
-            <option>Crítica</option>
-          </select>
-        </div>
-
-        <div class="table-card">
-          <div class="table-scroll">
-            <table>
-              <thead>
-                <tr>
-                  <th>Ticket</th>
-                  <th>Docente</th>
-                  <th>Tipo</th>
-                  <th>Estado</th>
-                  <th>Prioridad</th>
-                  <th>Fecha</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody id="tabla-reportes-body"></tbody>
-            </table>
-          </div>
-          <div id="tabla-empty" class="empty-state" style="display:none;">
-            <div class="emoji">📭</div>
-            <p>No se encontraron reportes</p>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
-</div>
 
-<!-- Modal detalle -->
-<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)cerrarModal()">
-  <div class="modal">
-    <div class="modal-header">
-      <h3 id="modal-titulo">Detalle del reporte</h3>
-      <button class="modal-close" onclick="cerrarModal()">✕</button>
-    </div>
-    <div class="modal-body" id="modal-body"></div>
-    <div class="modal-actions">
-      <select id="modal-estado" class="estado-select">
-        <option>Pendiente</option>
-        <option>En revisión</option>
-        <option>Resuelto</option>
-        <option>Cerrado</option>
-      </select>
-      <textarea id="modal-notas" placeholder="Notas del administrador..." style="flex:1;padding:8px 12px;border:1.5px solid var(--gris-borde);border-radius:8px;font-family:inherit;font-size:13px;resize:none;height:38px;" onkeydown="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
-      <button class="btn-guardar" onclick="guardarCambios()">💾 Guardar</button>
-      <button class="btn-pdf-modal" onclick="descargarPDF()">📄 PDF</button>
-    </div>
-  </div>
-</div>
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
 
-<!-- Toast -->
-<div class="toast" id="toast"></div>
+  <script>
+    // ── Configuración ───────────────────────────────────────────────────────────
+    // ⚠️ CAMBIA ESTA URL por la URL de tu backend en Railway después de desplegar
+    const API_URL = "https://reportes-jorgelarde.onrender.com";
 
-<script>
-  // ── Configuración ───────────────────────────────────────────────────────────
-  // ⚠️ CAMBIA ESTA URL por la URL de tu backend en Railway después de desplegar
-  const API_URL = "https://reportes-jorgelarde.onrender.com";
+    let token = localStorage.getItem("admin_token") || null;
+    let adminInfo = null;
+    let reporteActualId = null;
+    let todosLosReportes = [];
 
-  let token = localStorage.getItem("admin_token") || null;
-  let adminInfo = null;
-  let reporteActualId = null;
-  let todosLosReportes = [];
-
-  // ── Utilidades ──────────────────────────────────────────────────────────────
-  function mostrarToast(msg, tipo = "success") {
-    const t = document.getElementById("toast");
-    t.textContent = msg;
-    t.className = `toast ${tipo} show`;
-    setTimeout(() => t.classList.remove("show"), 4000);
-  }
-
-  function formatFecha(str) {
-    return new Date(str).toLocaleDateString("es-SV", {
-      day: "2-digit", month: "short", year: "numeric"
-    });
-  }
-
-  function badgeEstado(estado) {
-    const map = { Pendiente: "pendiente", "En revisión": "revision", Resuelto: "resuelto", Cerrado: "cerrado" };
-    return `<span class="badge badge-${map[estado] || 'pendiente'}">${estado}</span>`;
-  }
-
-  function badgePrioridad(p) {
-    return `<span class="badge badge-${p.toLowerCase()}">${p}</span>`;
-  }
-
-  // ── Navegación páginas ──────────────────────────────────────────────────────
-  function mostrarPagina(id) {
-    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-    document.getElementById(`page-${id}`).classList.add("active");
-    event.currentTarget?.classList.add("active");
-
-    if (id === "admin") {
-      if (token) {
-        mostrarPanel();
-        cargarDashboard();
-      } else {
-        document.getElementById("admin-login").style.display = "flex";
-        document.getElementById("admin-panel").classList.remove("show");
-      }
-    }
-  }
-
-  // ── Formulario docente ──────────────────────────────────────────────────────
-  // Fecha máxima = hoy
-  document.getElementById("fecha_ocurrencia").max = new Date().toISOString().split("T")[0];
-  document.getElementById("fecha_ocurrencia").value = new Date().toISOString().split("T")[0];
-
-  function seleccionarPrioridad(el) {
-    document.querySelectorAll(".prioridad-btn").forEach(b => {
-      b.style.opacity = "0.5";
-      b.style.transform = "none";
-    });
-    el.style.opacity = "1";
-    el.style.transform = "translateY(-2px)";
-    document.getElementById("prioridad").value = el.dataset.valor;
-  }
-
-  // Inicializar prioridad Media como activa
-  document.addEventListener("DOMContentLoaded", () => {
-    const mediaBtn = document.querySelector('[data-valor="Media"]');
-    if (mediaBtn) seleccionarPrioridad(mediaBtn);
-  });
-
-  function previewImagen(input) {
-    const img = document.getElementById("preview-img");
-    if (input.files && input.files[0]) {
-      const reader = new FileReader();
-      reader.onload = e => {
-        img.src = e.target.result;
-        img.style.display = "block";
-      };
-      reader.readAsDataURL(input.files[0]);
-    }
-  }
-
-  // Drag and drop
-  const uploadZone = document.getElementById("upload-zone");
-  uploadZone.addEventListener("dragover", e => { e.preventDefault(); uploadZone.classList.add("dragover"); });
-  uploadZone.addEventListener("dragleave", () => uploadZone.classList.remove("dragover"));
-  uploadZone.addEventListener("drop", e => {
-    e.preventDefault();
-    uploadZone.classList.remove("dragover");
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith("image/")) {
-      const dt = new DataTransfer();
-      dt.items.add(file);
-      document.getElementById("imagen").files = dt.files;
-      previewImagen(document.getElementById("imagen"));
-    }
-  });
-
-  async function enviarReporte() {
-    const campos = ["nombre_docente", "correo_docente", "tipo_error", "descripcion", "fecha_ocurrencia"];
-    let valido = true;
-
-    for (const id of campos) {
-      const el = document.getElementById(id);
-      if (!el.value.trim()) {
-        el.style.borderColor = "var(--rojo)";
-        valido = false;
-        setTimeout(() => el.style.borderColor = "", 3000);
-      }
+    // ── Utilidades ──────────────────────────────────────────────────────────────
+    function mostrarToast(msg, tipo = "success") {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.className = `toast ${tipo} show`;
+      setTimeout(() => t.classList.remove("show"), 4000);
     }
 
-    if (!valido) {
-      mostrarToast("Por favor completa todos los campos obligatorios.", "error");
-      return;
-    }
-
-    const btn = document.getElementById("submit-btn");
-    const spinner = document.getElementById("submit-spinner");
-    const texto = document.getElementById("submit-text");
-
-    btn.disabled = true;
-    spinner.classList.add("show");
-    texto.textContent = "Enviando...";
-
-    try {
-      const formData = new FormData();
-      formData.append("nombre_docente", document.getElementById("nombre_docente").value.trim());
-      formData.append("correo_docente", document.getElementById("correo_docente").value.trim());
-      formData.append("tipo_error", document.getElementById("tipo_error").value);
-      formData.append("descripcion", document.getElementById("descripcion").value.trim());
-      formData.append("salon", document.getElementById("salon").value.trim());
-      formData.append("fecha_ocurrencia", document.getElementById("fecha_ocurrencia").value);
-      formData.append("prioridad", document.getElementById("prioridad").value);
-
-      const imgFile = document.getElementById("imagen").files[0];
-      if (imgFile) formData.append("imagen", imgFile);
-
-      const res = await fetch(`${API_URL}/api/reportes`, {
-        method: "POST",
-        body: formData,
+    function formatFecha(str) {
+      return new Date(str).toLocaleDateString("es-SV", {
+        day: "2-digit", month: "short", year: "numeric"
       });
+    }
 
-      const data = await res.json();
+    function badgeEstado(estado) {
+      const map = { Pendiente: "pendiente", "En revisión": "revision", Resuelto: "resuelto", Cerrado: "cerrado" };
+      return `<span class="badge badge-${map[estado] || 'pendiente'}">${estado}</span>`;
+    }
 
-      if (!res.ok) throw new Error(data.error || "Error al enviar el reporte");
+    function badgePrioridad(p) {
+      return `<span class="badge badge-${p.toLowerCase()}">${p}</span>`;
+    }
 
-     document.getElementById("ticket-number-display").textContent = data.ticket;
-      document.getElementById("ticket-result").classList.add("show");
+    // ── Navegación páginas ──────────────────────────────────────────────────────
+    function mostrarPagina(id) {
+      document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      document.getElementById(`page-${id}`).classList.add("active");
+      event.currentTarget?.classList.add("active");
 
-      // Ocultar todas las secciones del formulario
-      document.querySelectorAll(".form-section").forEach(s => s.style.display = "none");
+      if (id === "admin") {
+        if (token) {
+          mostrarPanel();
+          cargarDashboard();
+        } else {
+          document.getElementById("admin-login").style.display = "flex";
+          document.getElementById("admin-panel").classList.remove("show");
+        }
+      }
+    }
 
-      // Limpiar todos los campos
+    // ── Formulario docente ──────────────────────────────────────────────────────
+    // Fecha máxima = hoy
+    document.getElementById("fecha_ocurrencia").max = new Date().toISOString().split("T")[0];
+    document.getElementById("fecha_ocurrencia").value = new Date().toISOString().split("T")[0];
+
+    function seleccionarPrioridad(el) {
+      document.querySelectorAll(".prioridad-btn").forEach(b => {
+        b.style.opacity = "0.5";
+        b.style.transform = "none";
+      });
+      el.style.opacity = "1";
+      el.style.transform = "translateY(-2px)";
+      document.getElementById("prioridad").value = el.dataset.valor;
+    }
+
+    // Inicializar prioridad Media como activa
+    document.addEventListener("DOMContentLoaded", () => {
+      const mediaBtn = document.querySelector('[data-valor="Media"]');
+      if (mediaBtn) seleccionarPrioridad(mediaBtn);
+    });
+
+    function previewImagen(input) {
+      const img = document.getElementById("preview-img");
+      const contenedor = document.getElementById("upload-zone");
+
+      // Quitar previews anteriores
+      contenedor.querySelectorAll(".preview-extra").forEach(e => e.remove());
+
+      if (input.files && input.files.length > 0) {
+        Array.from(input.files).forEach((file, index) => {
+          const reader = new FileReader();
+          reader.onload = e => {
+            if (index === 0) {
+              img.src = e.target.result;
+              img.style.display = "block";
+            } else {
+              const extra = document.createElement("img");
+              extra.src = e.target.result;
+              extra.className = "preview-img preview-extra";
+              extra.style.display = "block";
+              extra.style.marginTop = "8px";
+              contenedor.appendChild(extra);
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+    }
+
+    // Drag and drop
+    const uploadZone = document.getElementById("upload-zone");
+    uploadZone.addEventListener("dragover", e => { e.preventDefault(); uploadZone.classList.add("dragover"); });
+    uploadZone.addEventListener("dragleave", () => uploadZone.classList.remove("dragover"));
+    uploadZone.addEventListener("drop", e => {
+      e.preventDefault();
+      uploadZone.classList.remove("dragover");
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith("image/")) {
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        document.getElementById("imagen").files = dt.files;
+        previewImagen(document.getElementById("imagen"));
+      }
+    });
+
+    async function enviarReporte() {
+      const campos = ["nombre_docente", "correo_docente", "tipo_error", "descripcion", "fecha_ocurrencia"];
+      let valido = true;
+
+      for (const id of campos) {
+        const el = document.getElementById(id);
+        if (!el.value.trim()) {
+          el.style.borderColor = "var(--rojo)";
+          valido = false;
+          setTimeout(() => el.style.borderColor = "", 3000);
+        }
+      }
+
+      if (!valido) {
+        mostrarToast("Por favor completa todos los campos obligatorios.", "error");
+        return;
+      }
+
+      const btn = document.getElementById("submit-btn");
+      const spinner = document.getElementById("submit-spinner");
+      const texto = document.getElementById("submit-text");
+
+      btn.disabled = true;
+      spinner.classList.add("show");
+      texto.textContent = "Enviando...";
+
+      try {
+        const formData = new FormData();
+        formData.append("nombre_docente", document.getElementById("nombre_docente").value.trim());
+        formData.append("correo_docente", document.getElementById("correo_docente").value.trim());
+        formData.append("tipo_error", document.getElementById("tipo_error").value);
+        formData.append("descripcion", document.getElementById("descripcion").value.trim());
+        formData.append("salon", document.getElementById("salon").value.trim());
+        formData.append("fecha_ocurrencia", document.getElementById("fecha_ocurrencia").value);
+        formData.append("prioridad", document.getElementById("prioridad").value);
+
+        const imgFiles = document.getElementById("imagen").files;
+        if (imgFiles.length > 0) {
+          Array.from(imgFiles).forEach(file => {
+            formData.append("imagenes", file);
+          });
+        }
+
+        const res = await fetch(`${API_URL}/api/reportes`, {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error || "Error al enviar el reporte");
+
+        document.getElementById("ticket-number-display").textContent = data.ticket;
+        document.getElementById("ticket-result").classList.add("show");
+
+        // Ocultar todas las secciones del formulario
+        document.querySelectorAll(".form-section").forEach(s => s.style.display = "none");
+
+        // Limpiar todos los campos
+        document.getElementById("nombre_docente").value = "";
+        document.getElementById("correo_docente").value = "";
+        document.getElementById("tipo_error").value = "";
+        document.getElementById("descripcion").value = "";
+        document.getElementById("salon").value = "";
+        document.getElementById("fecha_ocurrencia").value = new Date().toISOString().split("T")[0];
+        document.getElementById("imagen").value = "";
+        document.getElementById("preview-img").style.display = "none";
+        document.getElementById("upload-zone").querySelectorAll(".preview-extra").forEach(e => e.remove());
+        document.getElementById("prioridad").value = "Media";
+
+      } catch (err) {
+        mostrarToast(err.message || "Error de conexión con el servidor.", "error");
+      } finally {
+        btn.disabled = false;
+        spinner.classList.remove("show");
+        texto.textContent = "📤 Enviar reporte";
+      }
+    }
+
+    function nuevoReporte() {
+      document.getElementById("ticket-result").classList.remove("show");
+
+      // Mostrar todas las secciones
+      document.querySelectorAll(".form-section").forEach(s => s.style.display = "block");
+
+      // Limpiar campos
       document.getElementById("nombre_docente").value = "";
       document.getElementById("correo_docente").value = "";
       document.getElementById("tipo_error").value = "";
@@ -1195,114 +1511,88 @@
       document.getElementById("fecha_ocurrencia").value = new Date().toISOString().split("T")[0];
       document.getElementById("imagen").value = "";
       document.getElementById("preview-img").style.display = "none";
-      document.getElementById("prioridad").value = "Media";
 
-    } catch (err) {
-      mostrarToast(err.message || "Error de conexión con el servidor.", "error");
-    } finally {
-      btn.disabled = false;
-      spinner.classList.remove("show");
-      texto.textContent = "📤 Enviar reporte";
-    }
-  }
-
-  function nuevoReporte() {
-    document.getElementById("ticket-result").classList.remove("show");
-
-    // Mostrar todas las secciones
-    document.querySelectorAll(".form-section").forEach(s => s.style.display = "block");
-
-    // Limpiar campos
-    document.getElementById("nombre_docente").value = "";
-    document.getElementById("correo_docente").value = "";
-    document.getElementById("tipo_error").value = "";
-    document.getElementById("descripcion").value = "";
-    document.getElementById("salon").value = "";
-    document.getElementById("fecha_ocurrencia").value = new Date().toISOString().split("T")[0];
-    document.getElementById("imagen").value = "";
-    document.getElementById("preview-img").style.display = "none";
-
-    // Resetear prioridad a Media
-    document.querySelectorAll(".prioridad-btn").forEach(b => b.style.opacity = "0.5");
-    const mediaBtn = document.querySelector('[data-valor="Media"]');
-    if (mediaBtn) seleccionarPrioridad(mediaBtn);
-  }
-
-  // ── Admin login ─────────────────────────────────────────────────────────────
-  async function hacerLogin() {
-    const username = document.getElementById("login-user").value.trim();
-    const password = document.getElementById("login-pass").value;
-    const errDiv = document.getElementById("login-error");
-
-    if (!username || !password) {
-      errDiv.textContent = "Ingresa usuario y contraseña.";
-      errDiv.style.display = "block";
-      return;
+      // Resetear prioridad a Media
+      document.querySelectorAll(".prioridad-btn").forEach(b => b.style.opacity = "0.5");
+      const mediaBtn = document.querySelector('[data-valor="Media"]');
+      if (mediaBtn) seleccionarPrioridad(mediaBtn);
     }
 
-    try {
-      const res = await fetch(`${API_URL}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
+    // ── Admin login ─────────────────────────────────────────────────────────────
+    async function hacerLogin() {
+      const username = document.getElementById("login-user").value.trim();
+      const password = document.getElementById("login-pass").value;
+      const errDiv = document.getElementById("login-error");
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
+      if (!username || !password) {
+        errDiv.textContent = "Ingresa usuario y contraseña.";
+        errDiv.style.display = "block";
+        return;
+      }
 
-      token = data.token;
-      adminInfo = data.admin;
-      localStorage.setItem("admin_token", token);
+      try {
+        const res = await fetch(`${API_URL}/api/auth/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        });
 
-      errDiv.style.display = "none";
-      mostrarPanel();
-      cargarDashboard();
-    } catch (err) {
-      errDiv.textContent = err.message || "Error de conexión.";
-      errDiv.style.display = "block";
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+
+        token = data.token;
+        adminInfo = data.admin;
+        localStorage.setItem("admin_token", token);
+
+        errDiv.style.display = "none";
+        mostrarPanel();
+        cargarDashboard();
+      } catch (err) {
+        errDiv.textContent = err.message || "Error de conexión.";
+        errDiv.style.display = "block";
+      }
     }
-  }
 
-  function mostrarPanel() {
-    document.getElementById("admin-login").style.display = "none";
-    document.getElementById("admin-panel").classList.add("show");
-    if (adminInfo) {
-      document.getElementById("welcome-msg").textContent = `Bienvenido, ${adminInfo.nombre}`;
+    function mostrarPanel() {
+      document.getElementById("admin-login").style.display = "none";
+      document.getElementById("admin-panel").classList.add("show");
+      if (adminInfo) {
+        document.getElementById("welcome-msg").textContent = `Bienvenido, ${adminInfo.nombre}`;
+      }
     }
-  }
 
-  function cerrarSesion() {
-    token = null;
-    adminInfo = null;
-    localStorage.removeItem("admin_token");
-    document.getElementById("admin-panel").classList.remove("show");
-    document.getElementById("admin-login").style.display = "flex";
-    document.getElementById("login-user").value = "";
-    document.getElementById("login-pass").value = "";
-  }
+    function cerrarSesion() {
+      token = null;
+      adminInfo = null;
+      localStorage.removeItem("admin_token");
+      document.getElementById("admin-panel").classList.remove("show");
+      document.getElementById("admin-login").style.display = "flex";
+      document.getElementById("login-user").value = "";
+      document.getElementById("login-pass").value = "";
+    }
 
-  // ── Admin dashboard ─────────────────────────────────────────────────────────
-  async function cargarDashboard() {
-    try {
-      const res = await fetch(`${API_URL}/api/admin/estadisticas`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+    // ── Admin dashboard ─────────────────────────────────────────────────────────
+    async function cargarDashboard() {
+      try {
+        const res = await fetch(`${API_URL}/api/admin/estadisticas`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-      if (res.status === 401) { cerrarSesion(); return; }
-      const data = await res.json();
+        if (res.status === 401) { cerrarSesion(); return; }
+        const data = await res.json();
 
-      document.getElementById("stat-total").textContent = data.total;
+        document.getElementById("stat-total").textContent = data.total;
 
-      const pendientes = data.porEstado.find(e => e._id === "Pendiente");
-      const resueltos = data.porEstado.find(e => e._id === "Resuelto");
-      const criticos = data.porPrioridad.find(e => e._id === "Crítica");
+        const pendientes = data.porEstado.find(e => e._id === "Pendiente");
+        const resueltos = data.porEstado.find(e => e._id === "Resuelto");
+        const criticos = data.porPrioridad.find(e => e._id === "Crítica");
 
-      document.getElementById("stat-pendientes").textContent = pendientes?.count || 0;
-      document.getElementById("stat-resueltos").textContent = resueltos?.count || 0;
-      document.getElementById("stat-criticos").textContent = criticos?.count || 0;
+        document.getElementById("stat-pendientes").textContent = pendientes?.count || 0;
+        document.getElementById("stat-resueltos").textContent = resueltos?.count || 0;
+        document.getElementById("stat-criticos").textContent = criticos?.count || 0;
 
-      // Tabla recientes
-      const tbody = data.recientes.map(r => `
+        // Tabla recientes
+        const tbody = data.recientes.map(r => `
         <tr>
           <td><span class="ticket-code">${r.numero_ticket}</span></td>
           <td>${r.nombre_docente}</td>
@@ -1314,7 +1604,7 @@
         </tr>
       `).join("") || `<tr><td colspan="7" style="text-align:center;padding:32px;color:#64748b;">Sin reportes recientes</td></tr>`;
 
-      document.getElementById("tabla-recientes").innerHTML = `
+        document.getElementById("tabla-recientes").innerHTML = `
         <div class="table-scroll">
           <table>
             <thead><tr>
@@ -1325,65 +1615,65 @@
           </table>
         </div>
       `;
-    } catch (err) {
-      mostrarToast("Error cargando estadísticas.", "error");
+      } catch (err) {
+        mostrarToast("Error cargando estadísticas.", "error");
+      }
     }
-  }
 
-  function mostrarVista(vista) {
-    document.getElementById("vista-dashboard").style.display = vista === "dashboard" ? "block" : "none";
-    document.getElementById("vista-reportes").style.display = vista === "reportes" ? "block" : "none";
-    document.querySelectorAll(".sidebar-item").forEach((el, i) => {
-      el.classList.toggle("active", (vista === "dashboard" && i === 0) || (vista === "reportes" && i === 1));
-    });
-    if (vista === "reportes") cargarReportes();
-    if (vista === "dashboard") cargarDashboard();
-  }
+    function mostrarVista(vista) {
+      document.getElementById("vista-dashboard").style.display = vista === "dashboard" ? "block" : "none";
+      document.getElementById("vista-reportes").style.display = vista === "reportes" ? "block" : "none";
+      document.querySelectorAll(".sidebar-item").forEach((el, i) => {
+        el.classList.toggle("active", (vista === "dashboard" && i === 0) || (vista === "reportes" && i === 1));
+      });
+      if (vista === "reportes") cargarReportes();
+      if (vista === "dashboard") cargarDashboard();
+    }
 
-  // ── Admin reportes ──────────────────────────────────────────────────────────
-  async function cargarReportes() {
-    try {
-      const res = await fetch(`${API_URL}/api/admin/reportes?limite=100`, {
-        headers: { Authorization: `Bearer ${token}` },
+    // ── Admin reportes ──────────────────────────────────────────────────────────
+    async function cargarReportes() {
+      try {
+        const res = await fetch(`${API_URL}/api/admin/reportes?limite=100`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (res.status === 401) { cerrarSesion(); return; }
+        const data = await res.json();
+        todosLosReportes = data.reportes;
+        renderizarTabla(todosLosReportes);
+      } catch (err) {
+        mostrarToast("Error cargando reportes.", "error");
+      }
+    }
+
+    function filtrarReportes() {
+      const buscar = document.getElementById("buscar-input").value.toLowerCase();
+      const estado = document.getElementById("filtro-estado").value;
+      const prioridad = document.getElementById("filtro-prioridad").value;
+
+      const filtrados = todosLosReportes.filter(r => {
+        const matchBuscar = !buscar || r.nombre_docente.toLowerCase().includes(buscar) ||
+          r.numero_ticket.toLowerCase().includes(buscar)
+        const matchEstado = !estado || r.estado === estado;
+        const matchPrioridad = !prioridad || r.prioridad === prioridad;
+        return matchBuscar && matchEstado && matchPrioridad;
       });
 
-      if (res.status === 401) { cerrarSesion(); return; }
-      const data = await res.json();
-      todosLosReportes = data.reportes;
-      renderizarTabla(todosLosReportes);
-    } catch (err) {
-      mostrarToast("Error cargando reportes.", "error");
-    }
-  }
-
-  function filtrarReportes() {
-    const buscar = document.getElementById("buscar-input").value.toLowerCase();
-    const estado = document.getElementById("filtro-estado").value;
-    const prioridad = document.getElementById("filtro-prioridad").value;
-
-    const filtrados = todosLosReportes.filter(r => {
-      const matchBuscar = !buscar || r.nombre_docente.toLowerCase().includes(buscar) ||
-        r.numero_ticket.toLowerCase().includes(buscar) 
-      const matchEstado = !estado || r.estado === estado;
-      const matchPrioridad = !prioridad || r.prioridad === prioridad;
-      return matchBuscar && matchEstado && matchPrioridad;
-    });
-
-    renderizarTabla(filtrados);
-  }
-
-  function renderizarTabla(reportes) {
-    const tbody = document.getElementById("tabla-reportes-body");
-    const empty = document.getElementById("tabla-empty");
-
-    if (!reportes.length) {
-      tbody.innerHTML = "";
-      empty.style.display = "block";
-      return;
+      renderizarTabla(filtrados);
     }
 
-    empty.style.display = "none";
-    tbody.innerHTML = reportes.map(r => `
+    function renderizarTabla(reportes) {
+      const tbody = document.getElementById("tabla-reportes-body");
+      const empty = document.getElementById("tabla-empty");
+
+      if (!reportes.length) {
+        tbody.innerHTML = "";
+        empty.style.display = "block";
+        return;
+      }
+
+      empty.style.display = "none";
+      tbody.innerHTML = reportes.map(r => `
       <tr>
         <td><span class="ticket-code">${r.numero_ticket}</span></td>
         <td>
@@ -1401,22 +1691,22 @@
         </td>
       </tr>
     `).join("");
-  }
+    }
 
-  // ── Modal detalle ───────────────────────────────────────────────────────────
-  async function verReporte(id) {
-    reporteActualId = id;
-    try {
-      const res = await fetch(`${API_URL}/api/admin/reportes/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const r = await res.json();
+    // ── Modal detalle ───────────────────────────────────────────────────────────
+    async function verReporte(id) {
+      reporteActualId = id;
+      try {
+        const res = await fetch(`${API_URL}/api/admin/reportes/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const r = await res.json();
 
-      document.getElementById("modal-titulo").textContent = `📋 ${r.numero_ticket} — ${r.tipo_error}`;
-      document.getElementById("modal-estado").value = r.estado;
-      document.getElementById("modal-notas").value = r.notas_admin || "";
+        document.getElementById("modal-titulo").textContent = `📋 ${r.numero_ticket} — ${r.tipo_error}`;
+        document.getElementById("modal-estado").value = r.estado;
+        document.getElementById("modal-notas").value = r.notas_admin || "";
 
-      document.getElementById("modal-body").innerHTML = `
+        document.getElementById("modal-body").innerHTML = `
         <div class="detail-row">
           <div class="detail-field"><label>Docente</label><p>${r.nombre_docente}</p></div>
           <div class="detail-field"><label>Correo</label><p>${r.correo_docente}</p></div>
@@ -1433,88 +1723,91 @@
           <label style="font-size:10px;color:var(--gris-texto);text-transform:uppercase;font-weight:600;display:block;margin-bottom:6px;">Descripción</label>
           <p style="font-size:14px;color:var(--texto);line-height:1.6;">${r.descripcion}</p>
         </div>
-        ${r.imagen ? `
+        ${r.imagenes && r.imagenes.length > 0 ? `
           <div>
-            <label style="font-size:10px;color:var(--gris-texto);text-transform:uppercase;font-weight:600;">Imagen adjunta</label>
-            <br><a href="${r.imagen.url}" target="_blank">
-              <img src="${r.imagen.url}" class="detail-img" alt="Evidencia" />
-            </a>
+            <label style="font-size:10px;color:var(--gris-texto);text-transform:uppercase;font-weight:600;">Imagenes adjuntas</label>
+            ${r.imagenes.map(img => `
+              <br><a href="${img.url}" target="_blank">
+                <img src="${img.url}" class="detail-img" alt="Evidencia" style="margin-top:8px;" />
+              </a>
+            `).join("")}
             <p style="font-size:11px;color:var(--gris-texto);margin-top:4px;">Haz clic en la imagen para ver en tamaño completo</p>
           </div>
         ` : ""}
       `;
 
-      document.getElementById("modal-overlay").classList.add("show");
-    } catch (err) {
-      mostrarToast("Error cargando el reporte.", "error");
+        document.getElementById("modal-overlay").classList.add("show");
+      } catch (err) {
+        mostrarToast("Error cargando el reporte.", "error");
+      }
     }
-  }
 
-  function cerrarModal() {
-    document.getElementById("modal-overlay").classList.remove("show");
-    reporteActualId = null;
-  }
-
-  async function guardarCambios() {
-    if (!reporteActualId) return;
-    try {
-      const res = await fetch(`${API_URL}/api/admin/reportes/${reporteActualId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          estado: document.getElementById("modal-estado").value,
-          notas_admin: document.getElementById("modal-notas").value,
-        }),
-      });
-
-      if (!res.ok) throw new Error("Error al guardar");
-      mostrarToast("✅ Reporte actualizado correctamente");
-      cerrarModal();
-      cargarReportes();
-      cargarDashboard();
-    } catch (err) {
-      mostrarToast("Error guardando cambios.", "error");
+    function cerrarModal() {
+      document.getElementById("modal-overlay").classList.remove("show");
+      reporteActualId = null;
     }
-  }
 
-  async function descargarPDF() {
-    if (reporteActualId) descargarPDFDirecto(reporteActualId, "reporte");
-  }
-
-  async function descargarPDFDirecto(id, ticket) {
-    try {
-      const res = await fetch(`${API_URL}/api/admin/reportes/${id}/pdf`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!res.ok) throw new Error("Error generando PDF");
-
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `reporte-${ticket}.pdf`;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      mostrarToast("Error descargando el PDF.", "error");
-    }
-  }
-
-  // Verificar token al cargar si ya está en admin
-  window.addEventListener("load", () => {
-    if (token) {
-      fetch(`${API_URL}/api/auth/me`, { headers: { Authorization: `Bearer ${token}` } })
-        .then(r => r.ok ? r.json() : Promise.reject())
-        .then(data => { adminInfo = data; })
-        .catch(() => {
-          token = null;
-          localStorage.removeItem("admin_token");
+    async function guardarCambios() {
+      if (!reporteActualId) return;
+      try {
+        const res = await fetch(`${API_URL}/api/admin/reportes/${reporteActualId}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            estado: document.getElementById("modal-estado").value,
+            notas_admin: document.getElementById("modal-notas").value,
+          }),
         });
+
+        if (!res.ok) throw new Error("Error al guardar");
+        mostrarToast("✅ Reporte actualizado correctamente");
+        cerrarModal();
+        cargarReportes();
+        cargarDashboard();
+      } catch (err) {
+        mostrarToast("Error guardando cambios.", "error");
+      }
     }
-  });
-</script>
+
+    async function descargarPDF() {
+      if (reporteActualId) descargarPDFDirecto(reporteActualId, "reporte");
+    }
+
+    async function descargarPDFDirecto(id, ticket) {
+      try {
+        const res = await fetch(`${API_URL}/api/admin/reportes/${id}/pdf`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) throw new Error("Error generando PDF");
+
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `reporte-${ticket}.pdf`;
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        mostrarToast("Error descargando el PDF.", "error");
+      }
+    }
+
+    // Verificar token al cargar si ya está en admin
+    window.addEventListener("load", () => {
+      if (token) {
+        fetch(`${API_URL}/api/auth/me`, { headers: { Authorization: `Bearer ${token}` } })
+          .then(r => r.ok ? r.json() : Promise.reject())
+          .then(data => { adminInfo = data; })
+          .catch(() => {
+            token = null;
+            localStorage.removeItem("admin_token");
+          });
+      }
+    });
+  </script>
 </body>
+
 </html>

@@ -24,13 +24,13 @@ const generarPDFReporte = async (reporte) => {
       doc.on("end", () => resolve(Buffer.concat(buffers)));
       doc.on("error", reject);
 
-      const AZUL_OSCURO  = "#1a2a4a";
-      const AZUL_MEDIO   = "#2563eb";
+      const AZUL_OSCURO = "#1a2a4a";
+      const AZUL_MEDIO = "#2563eb";
       const ROJO_CRITICO = "#dc2626";
-      const VERDE_OK     = "#16a34a";
-      const GRIS_CLARO   = "#f1f5f9";
-      const GRIS_TEXTO   = "#64748b";
-      const BLANCO       = "#ffffff";
+      const VERDE_OK = "#16a34a";
+      const GRIS_CLARO = "#f1f5f9";
+      const GRIS_TEXTO = "#64748b";
+      const BLANCO = "#ffffff";
 
       const colorPrioridad = {
         Baja: VERDE_OK,
@@ -156,30 +156,29 @@ const generarPDFReporte = async (reporte) => {
       }
 
       // ── IMAGEN ADJUNTA ────────────────────────────────────────────────────────
-    if (reporte.imagen && reporte.imagen.url) {
-        // Siempre poner la imagen en página nueva
-        doc.addPage();
-        y = 50;
+      if (reporte.imagenes && reporte.imagenes.length > 0) {
+        for (const imagen of reporte.imagenes) {
+          doc.addPage();
+          y = 50;
+          y = dibujarSeccion("EVIDENCIA FOTOGRAFICA", y);
 
-        y = dibujarSeccion("EVIDENCIA FOTOGRAFICA", y);
+          try {
+            const imgBuffer = await descargarImagen(imagen.url);
+            const maxAncho = 460;
+            const maxAlto = 280;
 
-        try {
-          const imgBuffer = await descargarImagen(reporte.imagen.url);
-          const maxAncho = 460;
-          const maxAlto  = 280;
-
-          doc.rect(50, y, 495, maxAlto + 24).fill(GRIS_CLARO);
-          doc.image(imgBuffer, 67, y + 12, {
-            fit: [maxAncho, maxAlto],
-            align: "center",
-            valign: "center",
-          });
-
-          y += maxAlto + 36;
-        } catch (imgErr) {
-          doc.fillColor(ROJO_CRITICO).font("Helvetica").fontSize(10)
-            .text("No se pudo cargar la imagen adjunta.", 62, y + 12);
-          y += 40;
+            doc.rect(50, y, 495, maxAlto + 24).fill(GRIS_CLARO);
+            doc.image(imgBuffer, 67, y + 12, {
+              fit: [maxAncho, maxAlto],
+              align: "center",
+              valign: "center",
+            });
+            y += maxAlto + 36;
+          } catch (imgErr) {
+            doc.fillColor(ROJO_CRITICO).font("Helvetica").fontSize(10)
+              .text("No se pudo cargar la imagen adjunta.", 62, y + 12);
+            y += 40;
+          }
         }
       }
 

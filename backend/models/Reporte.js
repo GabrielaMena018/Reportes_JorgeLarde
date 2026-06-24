@@ -49,11 +49,13 @@ const reporteSchema = new mongoose.Schema(
     },
 
     // Imagen adjunta (Cloudinary)
-    imagen: {
-      url: String,
-      public_id: String,
-      nombre_original: String,
-    },
+    imagenes: [
+      {
+        url: String,
+        public_id: String,
+        nombre_original: String,
+      }
+    ],
 
     // Estado del reporte
     estado: {
