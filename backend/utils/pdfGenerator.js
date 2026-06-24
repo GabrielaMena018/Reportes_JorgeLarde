@@ -103,16 +103,16 @@ const generarPDFReporte = async (reporte) => {
       // ── SECCION: DATOS DEL DOCENTE ────────────────────────────────────────────
       y = dibujarSeccion("INFORMACION DEL DOCENTE", y);
 
-      dibujarCampo("Nombre completo", reporte.nombre_docente, 50, y, 220);
+    dibujarCampo("Nombre completo", reporte.nombre_docente, 50, y, 220);
       dibujarCampo("Correo electronico", reporte.correo_docente, 280, y, 265);
-      y += 36;
+      y += 50;
 
       // ── SECCION: DETALLES DEL ERROR ───────────────────────────────────────────
       y = dibujarSeccion("DETALLES DEL ERROR", y);
 
       dibujarCampo("Tipo de error", reporte.tipo_error, 50, y, 220);
       dibujarCampo("Salon / Ubicacion", reporte.salon || "No especificado", 280, y, 265);
-      y += 26;
+      y += 50;
       dibujarCampo(
         "Fecha de ocurrencia",
         new Date(reporte.fecha_ocurrencia).toLocaleDateString("es-SV", {
@@ -120,8 +120,7 @@ const generarPDFReporte = async (reporte) => {
         }),
         50, y, 495
       );
-      y += 36;
-
+      y += 50;
       // Descripcion
       doc.rect(50, y, 495, 14).fill(AZUL_OSCURO);
       doc.fillColor("white").font("Helvetica-Bold").fontSize(10)
